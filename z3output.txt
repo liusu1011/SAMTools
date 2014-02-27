@@ -1,0 +1,26 @@
+unsat
+
+Result:
+added eqs:               1270
+array ax1:               40
+array ax2:               227
+array def const:         2
+array sel const:         22
+assert diseq:            13
+assert lower:            45
+assert upper:            52
+binary propagations:     1426
+conflicts:               56
+datatype accessor ax:    40
+datatype constructor ax: 40
+decisions:               743
+del clause:              987
+eq adapter:              6
+minimized lits:          22
+mk clause:               1075
+num checks:              1
+pivots:                  5
+propagations:            1902
+max. heap size:     0.725695 Mbytes
+
+END OF Result
