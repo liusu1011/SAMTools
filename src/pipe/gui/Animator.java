@@ -8,7 +8,6 @@ import java.util.Iterator;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
-import pipe.dataLayer.Arc;
 import pipe.dataLayer.DataLayer;
 import pipe.dataLayer.Transition;
 
@@ -40,12 +39,12 @@ public class Animator {
    
    Timer timer;
    int numberSequences;   
-   public static ArrayList firedTransitions;
+   public static ArrayList<Transition> firedTransitions;
    public static int count = 0;
    
    
    public Animator(){     
-      firedTransitions = new ArrayList();
+      firedTransitions = new ArrayList<Transition>();
       
       timer = new Timer(0, new ActionListener() {
          public void actionPerformed(ActionEvent evt) {
@@ -185,53 +184,11 @@ public class Animator {
 	      }
 	   }
    
-   
-//   public void doHighLevelRandomFiringexpired() {
-////      DataLayer data = CreateGui.currentPNMLData();
-////      Transition t = data.fireRandomTransition(); //revisar
-////      //CreateGui.getAnimationHistory().clearStepsForward(); //ok - igual
-////      //removeStoredTransitions(); //ok - igual
-////      if (t != null) {
-////         fireTransition(t); //revisar
-////         //unhighlightDisabledTransitions();
-////         //highlightEnabledTransitions();
-////      } else {
-////         CreateGui.getApp().getStatusBar().changeText( 
-////                 "ERROR: No transition to fire." );
-////      }
-//	   ArrayList tempTrans = new ArrayList();
-//	   DataLayer data = CreateGui.currentPNMLData();
-//	   for(int i=0;i<data.getTransitionsCount();i++){
-//		   if(data.checkTransitionIsEnabled(data.getTransition(i))){
-//			   tempTrans.add(data.getTransition(i));
-//		   }		   
-//	   }
-//	   
-////	   for(Arc a : getArcInList()
-//	   
-//	   if(!tempTrans.isEmpty()){
-//		   fireHighLevelTransition(data.randomPickTransition(tempTrans));
-//   
-//	   }else{
-//		   CreateGui.getApp().getStatusBar().changeText("ERROR: No transition to fire.");
-//	   }
-//	   tempTrans.clear();
-//
-//   }
-   
+   /**
+    * use an algorithm to find a transition firing candidate
+    */
    public void doHighLevelRandomFiring(){
 	   DataLayer data = CreateGui.currentPNMLData();
-	   
-//	   System.out.println("unknown listing before fire action:");
-//	   for(int k=0;k<data.unkowns.size();k++){
-//		   System.out.println(data.unkowns.get(k).getName());
-//	   }
-//	   System.out.println("disabled listing before fire action:");
-//	   for(int d=0;d<data.disabled.size();d++){
-//		   System.out.println(data.disabled.get(d).getName());
-//	   }
-//	   
-//	   System.out.println("---------------------------------");
 	   
 	   while(!data.unkowns.isEmpty()){
 		   Transition tCandidate = data.randomPickTransition(data.unkowns);
@@ -252,7 +209,7 @@ public class Animator {
 					   data.unkowns.add(thisDepTrans);
 				   }
 			   }
-			   break;
+			   return;
 		   }
 		   
 	   }
@@ -334,7 +291,10 @@ public class Animator {
 	      }
 	   }
 
-   
+   /**
+    * fire transition on GUI level
+    * @param transition
+    */
    public void fireHighLevelTransition(Transition transition){
 //      Animator animator = CreateGui.getAnimator();
 //

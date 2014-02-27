@@ -1238,28 +1238,6 @@ public class Transition
 	   }
    }
    
-// public boolean TestCheckTransitionIsEnabled(){
-//   boolean b = this.getToken(false);
-//   if(b){
-//   String formula = this.getFormula();
-//   ErrorMsg errorMsg = new ErrorMsg(formula);	   
-//   Parse p = new Parse(formula, errorMsg);
-//   Sentence s = p.absyn;
-//   s.accept(new Interpreter(errorMsg, this, 0));
-//   
-//   if(s.bool_val){	   
-//	   System.out.println("This Transition is enabled!!!");
-//	   return true;
-//   }else{
-//	   System.out.println("Not enabled!!!");
-//	   return false;
-//   }
-//   }else{
-//	   System.out.println("Get Token Failure!!!");
-//	   return false;
-//   }
-//}
-   
    public SymbolTable getTransSymbolTable(){
 	   return this.symTable;
    }

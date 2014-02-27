@@ -3059,32 +3059,6 @@ public class DataLayer
 	   return (Place)pArray.get(pPlacesIdx);
    }
    
-//   public boolean checkTransitionIsEnabled(Transition transition){
-//	   boolean isEnable = false;
-//	   
-//	   boolean getTokBool = transition.getToken(false);
-//	   if(getTokBool){
-//	   String formula = transition.getFormula();
-//	   ErrorMsg errorMsg = new ErrorMsg(formula);	   
-//	   Parse p = new Parse(formula, errorMsg);
-//	   Sentence s = p.absyn;
-//	   s.accept(new Interpreter(errorMsg, transition, 0));
-//	   isEnable = s.bool_val;
-//	   
-//	   if(s.bool_val){	   
-//		   System.out.println("This Transition "+transition.getName()+" is enabled!!!");
-//	   }else{
-//		   System.out.println("The Selected Transition "+transition.getName()+" is Not enabled(Formula Constraint False)!!!");
-////		   transition.tailToken();
-//	   }
-//	   }else{
-//		   System.out.println("The Selected Transition "+transition.getName()+" is Not enabled (Tokens Needed)!!!");
-//	   }
-//	   //check do not change anything, so we need to clear symbol table
-//	   transition.getTransSymbolTable().cleanTable();
-//	   
-//	   return isEnable;
-//   }
    public boolean checkStatus(Transition transition){
 	   boolean status = false;
 	   
@@ -3173,65 +3147,65 @@ public class DataLayer
    }
    
    
-   public boolean checkStatusAndFire(Transition transition){
-	   boolean status = false;
-	   int tokCombinations = 1; 
-	   int numOfInputPlaces = transition.getPlaceInList().size();
-	   int[] getTokIndex = new int[numOfInputPlaces];
-	   
-	   //get the number of tokens from places and find the number of combinations
-	   for(Place p : transition.getPlaceInList()){
-		   if(p.getToken().listToken.isEmpty()){
-			   System.out.println("(Tokens Needed)!!!");
-			   return false;
-		   }
-		   if(!p.getToken().getDataType().getPow()){
-			   int n = p.getToken().listToken.size();
-			   tokCombinations = tokCombinations * n;
-		   }   
-	   }
-	   
-	   //fill in the array that which token in places index will be checked.
-	   //then get token by the index array and check enableness.
-	   for(int i=0;i<tokCombinations;i++){
-		   for(int j=0;j<transition.getPlaceInList().size();j++){
-			   if(transition.getPlaceInList().get(j).getToken().getDataType().getPow()){
-				   getTokIndex[j] = 1;
-			   }else{
-				   getTokIndex[j] = i%(transition.getPlaceInList().get(j).getToken().listToken.size());
-			   }
-		   }
-		   
-		   //check status
-		   boolean getTokBool = transition.getToken(false, getTokIndex);
-		   if(getTokBool){
-		   String formula = transition.getFormula();
-		   ErrorMsg errorMsg = new ErrorMsg(formula);	   
-		   Parse p = new Parse(formula, errorMsg);
-		   Sentence s = p.absyn;
-		   s.accept(new Interpreter(errorMsg, transition, 0));
-		   status = s.bool_val;
-		   }
-		   //fire
-		   if(status){
-			   transition.getToken(true, getTokIndex);
-			   String formula = transition.getFormula();
-			   ErrorMsg errorMsg = new ErrorMsg(formula);	   
-			   Parse p = new Parse(formula, errorMsg);
-			   Sentence s = p.absyn;
-			   s.accept(new Interpreter(errorMsg, transition, 1));
-			   
-			   transition.sendToken();
-			   transition.getTransSymbolTable().cleanTable();
-			   
-			   return status;
-		   }
-	   }
-	   
-	   
-	   
-	   return status;
-   }
+//   public boolean checkStatusAndFire(Transition transition){
+//	   boolean status = false;
+//	   int tokCombinations = 1; 
+//	   int numOfInputPlaces = transition.getPlaceInList().size();
+//	   int[] getTokIndex = new int[numOfInputPlaces];
+//	   
+//	   //get the number of tokens from places and find the number of combinations
+//	   for(Place p : transition.getPlaceInList()){
+//		   if(p.getToken().listToken.isEmpty()){
+//			   System.out.println("(Tokens Needed)!!!");
+//			   return false;
+//		   }
+//		   if(!p.getToken().getDataType().getPow()){
+//			   int n = p.getToken().listToken.size();
+//			   tokCombinations = tokCombinations * n;
+//		   }   
+//	   }
+//	   
+//	   //fill in the array that which token in places index will be checked.
+//	   //then get token by the index array and check enableness.
+//	   for(int i=0;i<tokCombinations;i++){
+//		   for(int j=0;j<transition.getPlaceInList().size();j++){
+//			   if(transition.getPlaceInList().get(j).getToken().getDataType().getPow()){
+//				   getTokIndex[j] = 1;
+//			   }else{
+//				   getTokIndex[j] = i%(transition.getPlaceInList().get(j).getToken().listToken.size());
+//			   }
+//		   }
+//		   
+//		   //check status
+//		   boolean getTokBool = transition.getToken(false, getTokIndex);
+//		   if(getTokBool){
+//		   String formula = transition.getFormula();
+//		   ErrorMsg errorMsg = new ErrorMsg(formula);	   
+//		   Parse p = new Parse(formula, errorMsg);
+//		   Sentence s = p.absyn;
+//		   s.accept(new Interpreter(errorMsg, transition, 0));
+//		   status = s.bool_val;
+//		   }
+//		   //fire
+//		   if(status){
+//			   transition.getToken(true, getTokIndex);
+//			   String formula = transition.getFormula();
+//			   ErrorMsg errorMsg = new ErrorMsg(formula);	   
+//			   Parse p = new Parse(formula, errorMsg);
+//			   Sentence s = p.absyn;
+//			   s.accept(new Interpreter(errorMsg, transition, 1));
+//			   
+//			   transition.sendToken();
+//			   transition.getTransSymbolTable().cleanTable();
+//			   
+//			   return status;
+//		   }
+//	   }
+//	   
+//	   
+//	   
+//	   return status;
+//   }
    
    public void setDataTypePool(Vector<DataType> _dtPool){
 	   Iterator idt = _dtPool.iterator();
