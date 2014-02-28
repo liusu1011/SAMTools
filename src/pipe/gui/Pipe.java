@@ -19,7 +19,8 @@ public class Pipe {
    public static final int ANIMATE      = 98;
    public static final int RANDOMLOWLEVEL  = 97;
    public static final int RANDOMHIGHLEVEL = 99;
-   public static final int MODELCHECKING = 121;
+   public static final int SIMULATEALL = 126;   
+   public static final int MODELCHECKING = 125;
    public static final int START        = 100;
    public static final int FIRE         = 101;
    public static final int STEPFORWARD  = 102;

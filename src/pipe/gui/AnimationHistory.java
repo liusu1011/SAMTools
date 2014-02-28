@@ -25,7 +25,7 @@ public class AnimationHistory
         extends JTextPane {
    
    /** Holds all the transitions in the sequence */
-   public Vector fSeq;
+   public Vector<String> fSeq;
    private String initText;
    private Document doc;
    private Style emph;
@@ -41,7 +41,7 @@ public class AnimationHistory
       initStyles();
       doc = getDocument();
       doc.insertString(doc.getLength(),text,bold);
-      fSeq = new Vector();
+      fSeq = new Vector<String>();
       fSeq.add("Initial Marking");
       currentItem = 1;
       updateText();
@@ -119,6 +119,10 @@ public class AnimationHistory
    
    public boolean isStepBackAllowed(){
       return currentItem > 1;
+   }
+   
+   public String getLastFiredTransitionName() {
+	   return this.fSeq.lastElement();
    }
    
 }

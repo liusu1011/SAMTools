@@ -187,7 +187,7 @@ public class Animator {
    /**
     * use an algorithm to find a transition firing candidate
     */
-   public void doHighLevelRandomFiring(){
+   public boolean doHighLevelRandomFiring(){
 	   DataLayer data = CreateGui.currentPNMLData();
 	   
 	   while(!data.unkowns.isEmpty()){
@@ -209,15 +209,9 @@ public class Animator {
 					   data.unkowns.add(thisDepTrans);
 				   }
 			   }
-			   return;
+			   return true;
 		   }
-		   
-	   }
-	   
-	   
-	   
-	   
-	   
+	   }   
 //	   System.out.println("unknown listing before fire action:");
 //	   for(int j=0;j<data.unkowns.size();j++){
 //		   System.out.println(data.unkowns.get(j).getName());
@@ -226,9 +220,8 @@ public class Animator {
 //	   for(int s=0;s<data.disabled.size();s++){
 //		   System.out.println(data.disabled.get(s).getName());
 //	   }
-//	   
-	   
 	   System.out.println("None of transition can be enabled!!!");
+	   return false;
    }
      
    

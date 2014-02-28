@@ -51,6 +51,7 @@ import pipe.experiment.editor.gui.ExperimentEditor;
 import pipe.experiment.Experiment;
 import pipe.gui.action.GuiAction;
 import pipe.gui.handler.AnalysisModuleHandler;
+import pipe.gui.handler.SimulationModuleHandler;
 import pipe.gui.widgets.FileBrowser;
 import pipe.gui.widgets.Z3Dialog;
 import pipe.io.JarUtilities;
@@ -109,7 +110,8 @@ public class GuiFrame
            transAction, timedtransAction, tokenAction, selectAction, rateAction,
            markingAction, deleteTokenAction, dragAction;
    private AnimateAction startAction, stepforwardAction, stepbackwardAction,
-           randomLowLevelAction, randomHighLevelAction, randomAnimateAction, modelCheckingAction, convertZ3Action;
+           randomLowLevelAction, randomHighLevelAction, randomAnimateAction, simulateAllAction,
+           modelCheckingAction, convertZ3Action;
    
    public boolean dragging = false;
    
@@ -396,6 +398,9 @@ public class GuiFrame
       addMenuItem(animateMenu, randomHighLevelAction =
           new AnimateAction("RandomHighLevel", Pipe.RANDOMHIGHLEVEL,
           "Randomly fire a high level transition", "6"));
+      addMenuItem(animateMenu, simulateAllAction =
+              new AnimateAction("SimAll", Pipe.SIMULATEALL,
+              "Simulation up to a number of fires", "10",true));
       addMenuItem(animateMenu, randomAnimateAction =
               new AnimateAction("Animate", Pipe.ANIMATE,
               "Randomly fire a number of transitions", "7",true));
@@ -496,6 +501,7 @@ public class GuiFrame
 //      addButton(animationToolBar, randomLowLevelAction);
 //      addButton(animationToolBar, randomAnimateAction);
       addButton(animationToolBar, randomHighLevelAction);
+      addButton(animationToolBar, simulateAllAction);
       addButton(animationToolBar, modelCheckingAction);
       addButton(animationToolBar, convertZ3Action);
       toolBar.add(animationToolBar);
@@ -601,6 +607,7 @@ public class GuiFrame
       }
       randomLowLevelAction.setEnabled(!status);
       randomAnimateAction.setEnabled(!status);
+      simulateAllAction.setEnabled(!status);
       randomHighLevelAction.setEnabled(!status);
       modelCheckingAction.setEnabled(!status);
       convertZ3Action.setEnabled(!status);
@@ -927,6 +934,7 @@ public class GuiFrame
       }
       randomLowLevelAction.setEnabled(!on);
       randomHighLevelAction.setEnabled(!on);
+      simulateAllAction.setEnabled(!on);
       randomAnimateAction.setSelected(on);
       modelCheckingAction.setSelected(!on);
    }
@@ -1146,6 +1154,12 @@ public class GuiFrame
                 stepbackwardAction.setEnabled(animBox.isStepBackAllowed());
                 break; 
                
+            case Pipe.SIMULATEALL:
+            	//TODO:NEW: add a simulation module handler
+            	SimulationModuleHandler smHandler = new SimulationModuleHandler();
+            	smHandler.simulationReportWindow();
+            	break;
+               
             case Pipe.STEPFORWARD:
                animBox.stepForward();
                CreateGui.getAnimator().stepForward();
@@ -1172,6 +1186,7 @@ public class GuiFrame
                   stepforwardAction.setEnabled(false);
                   randomLowLevelAction.setEnabled(false);
                   randomHighLevelAction.setEnabled(false);
+                  simulateAllAction.setEnabled(false);
                   modelCheckingAction.setEnabled(false);
                   setSelected(true);
                   animBox.clearStepsForward();
