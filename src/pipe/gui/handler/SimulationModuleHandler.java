@@ -58,8 +58,6 @@ public class SimulationModuleHandler extends AbstractAction{
 	      Container contentPane = guiDialog.getContentPane();
 	      contentPane.setLayout(new BoxLayout(contentPane,BoxLayout.PAGE_AXIS));
 
-	      //adfadf
-	      System.out.print("");
 	      // 3 Add results pane
 	      contentPane.add(results = new ResultsTxtPane(null)); //SUTODO: the null parameter in ResultsTxtPane to be reconsider.
 	      
