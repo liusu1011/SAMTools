@@ -2,3 +2,7 @@ This version implements high level Petri nets to Z3 smt solver c api inputs.
 
 10/28/2013 added a dump transition for the completeness that every step has a transition enabled.
 
+<<<<<<< HEAD
+=======
+a net repo
+>>>>>>> 9261a0d5674fd436822a6d48b4ab463f2a8d8a26
