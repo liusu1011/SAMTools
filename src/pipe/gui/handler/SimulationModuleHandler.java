@@ -57,10 +57,7 @@ public class SimulationModuleHandler extends AbstractAction{
 		   // 1 Set layout
 	      Container contentPane = guiDialog.getContentPane();
 	      contentPane.setLayout(new BoxLayout(contentPane,BoxLayout.PAGE_AXIS));
-	      
-//	      // 2 Add file browser
-//	      sourceFilePanel = new PetriNetChooserPanel("Source net",pnmlData);
-//	      contentPane.add(sourceFilePanel);
+
 	      
 	      // 3 Add results pane
 	      contentPane.add(results = new ResultsTxtPane(null)); //SUTODO: the null parameter in ResultsTxtPane to be reconsider.
