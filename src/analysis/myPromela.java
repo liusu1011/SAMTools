@@ -133,25 +133,36 @@ public class myPromela {
 			//Test if all input places is empty
 			for(int ipNo = 0; ipNo < inputPlaces.size(); ipNo++){
 				String inPlaceName = inputPlaces.get(ipNo).getName();
-				if(!inputPlaces.get(ipNo).getToken().getDataType().getPow()){
-					if(ipNo == 0){
-						sPromela += "  place_"+inPlaceName+"?["+inPlaceName+"]";
-					}else{
-						sPromela += " &&  place_"+inPlaceName+"?["+inPlaceName+"]";
-					}
+//				if(!inputPlaces.get(ipNo).getToken().getDataType().getPow()){
+//					if(ipNo == 0){
+//						sPromela += "  place_"+inPlaceName+"?["+inPlaceName+"]";
+//					}else{
+//						sPromela += " &&  place_"+inPlaceName+"?["+inPlaceName+"]";
+//					}
+//				}
+				if(ipNo ==0) {
+					sPromela += "  place_"+inPlaceName+"?["+inPlaceName+"]";
+				}else {
+					sPromela += " &&  place_"+inPlaceName+"?["+inPlaceName+"]";
 				}
 			}
 			sPromela += "\n	->\n";
 			for(int ipNo = 0; ipNo < inputPlaces.size(); ipNo++){
 				String inPlaceName = inputPlaces.get(ipNo).getName();
-				if(!inputPlaces.get(ipNo).getToken().getDataType().getPow()){
-					sPromela += "  place_"+inPlaceName+"?"+inPlaceName+";\n";
-					
-					if(ipNo == 0){
-						else_temp += " place_"+inPlaceName+"!"+inPlaceName;
-					}else{
-						else_temp += ";\n		place_"+inPlaceName+"!"+inPlaceName;
-					}
+//				if(!inputPlaces.get(ipNo).getToken().getDataType().getPow()){
+//					sPromela += "  place_"+inPlaceName+"?"+inPlaceName+";\n";
+//					
+//					if(ipNo == 0){
+//						else_temp += " place_"+inPlaceName+"!"+inPlaceName;
+//					}else{
+//						else_temp += ";\n		place_"+inPlaceName+"!"+inPlaceName;
+//					}
+//				}
+				sPromela += "  place_"+inPlaceName+"?"+inPlaceName+";\n";
+				if(ipNo == 0) {
+					else_temp += " place_"+inPlaceName+"!"+inPlaceName;
+				}else{
+					else_temp += ";\n		place_"+inPlaceName+"!"+inPlaceName;
 				}
 			}
 			sPromela +="	if\n";
