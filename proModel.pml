@@ -413,4 +413,4 @@ init {
   place_msg_in!msg_in;
 run Main()
 }
-ltl f{}
+ltl f{<>()}

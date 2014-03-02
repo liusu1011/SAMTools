@@ -1,6 +1,7 @@
 package analysis;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Vector;
 
 import ltlparser.PropertyFormulaToPromela;
@@ -30,10 +31,13 @@ public class myPromela {
 	public DataLayer dataLayer;
 	public String propertyFormula = "";
 	public String sPromela = "";
+	HashMap<String, Integer> stringConstantMap;
+	public static int stringConstCounter = 0; 
 	
 	public myPromela(DataLayer data, String formula){
 		dataLayer = data;
 		propertyFormula = formula;
+		stringConstantMap = new HashMap<String,Integer>();
 		//Promela definition
 		defineBound();		
 		definePlaceDataStructure();
@@ -133,25 +137,36 @@ public class myPromela {
 			//Test if all input places is empty
 			for(int ipNo = 0; ipNo < inputPlaces.size(); ipNo++){
 				String inPlaceName = inputPlaces.get(ipNo).getName();
-				if(!inputPlaces.get(ipNo).getToken().getDataType().getPow()){
-					if(ipNo == 0){
-						sPromela += "  place_"+inPlaceName+"?["+inPlaceName+"]";
-					}else{
-						sPromela += " &&  place_"+inPlaceName+"?["+inPlaceName+"]";
-					}
+//				if(!inputPlaces.get(ipNo).getToken().getDataType().getPow()){
+//					if(ipNo == 0){
+//						sPromela += "  place_"+inPlaceName+"?["+inPlaceName+"]";
+//					}else{
+//						sPromela += " &&  place_"+inPlaceName+"?["+inPlaceName+"]";
+//					}
+//				}
+				if(ipNo ==0) {
+					sPromela += "  place_"+inPlaceName+"?["+inPlaceName+"]";
+				}else {
+					sPromela += " &&  place_"+inPlaceName+"?["+inPlaceName+"]";
 				}
 			}
 			sPromela += "\n	->\n";
 			for(int ipNo = 0; ipNo < inputPlaces.size(); ipNo++){
 				String inPlaceName = inputPlaces.get(ipNo).getName();
-				if(!inputPlaces.get(ipNo).getToken().getDataType().getPow()){
-					sPromela += "  place_"+inPlaceName+"?"+inPlaceName+";\n";
-					
-					if(ipNo == 0){
-						else_temp += " place_"+inPlaceName+"!"+inPlaceName;
-					}else{
-						else_temp += ";\n		place_"+inPlaceName+"!"+inPlaceName;
-					}
+//				if(!inputPlaces.get(ipNo).getToken().getDataType().getPow()){
+//					sPromela += "  place_"+inPlaceName+"?"+inPlaceName+";\n";
+//					
+//					if(ipNo == 0){
+//						else_temp += " place_"+inPlaceName+"!"+inPlaceName;
+//					}else{
+//						else_temp += ";\n		place_"+inPlaceName+"!"+inPlaceName;
+//					}
+//				}
+				sPromela += "  place_"+inPlaceName+"?"+inPlaceName+";\n";
+				if(ipNo == 0) {
+					else_temp += " place_"+inPlaceName+"!"+inPlaceName;
+				}else{
+					else_temp += ";\n		place_"+inPlaceName+"!"+inPlaceName;
 				}
 			}
 			sPromela +="	if\n";
@@ -163,7 +178,7 @@ public class myPromela {
 			Parse p = new Parse(formula, errorMsg);
 			Sentence s = p.absyn;
 			System.out.println(trans[transNo].getName());
-			s.accept(new Formula2Promela(errorMsg, trans[transNo], 0));
+			s.accept(new Formula2Promela(errorMsg, trans[transNo], 0, this.stringConstantMap));
 //			s.accept(new Printer());
 			
 			if(!("").equals(s.strPre)){
@@ -200,15 +215,16 @@ public class myPromela {
 			Parse p = new Parse(formula, errorMsg);
 			Sentence s = p.absyn;
 //			System.out.println(trans[transNo].getName());
-			s.accept(new Formula2Promela(errorMsg, trans[transNo], 0));
+			s.accept(new Formula2Promela(errorMsg, trans[transNo], 0, this.stringConstantMap));
 			sPromela += s.strPost;
 			
 			ArrayList<Place> otPlaces= trans[transNo].getPlaceOutList();			
 			for(int opNo = 0; opNo < otPlaces.size(); opNo++){
 				String otPlaceName = otPlaces.get(opNo).getName();
-				if(!otPlaces.get(opNo).getToken().getDataType().getPow()){
-					sPromela += "  place_" + otPlaceName + "!" +otPlaceName+";\n";
-				}
+//				if(!otPlaces.get(opNo).getToken().getDataType().getPow()){
+//					sPromela += "  place_" + otPlaceName + "!" +otPlaceName+";\n";
+//				}
+				sPromela += "  place_" + otPlaceName + "!" +otPlaceName+";\n";
 			}
 			sPromela += "  "+transName+"_is_enabled = false\n";
 			sPromela += "}\n";
@@ -287,7 +303,15 @@ public class myPromela {
 					if(bt.kind == 0){
 						value = Integer.toString(bt.Tint);
 					}else if(bt.kind == 1){
-						value = bt.Tstring;
+						String s = bt.Tstring;
+						if(stringConstantMap.containsKey(s)){
+							value = Integer.toString(stringConstantMap.get(s));
+						}else{
+							value = Integer.toBinaryString(myPromela.stringConstCounter);
+							this.stringConstantMap.put(s, myPromela.stringConstCounter);
+							myPromela.stringConstCounter++;
+						}
+						
 					}else System.out.println("Get basic type kind error!");
 					sPromela += "  "+placeName+"."+placeName+"_field"+Integer.toString(j+1)+
 						"="+value+";\n";

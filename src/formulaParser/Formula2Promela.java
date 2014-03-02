@@ -1,6 +1,9 @@
 package formulaParser;
 
+import hlpn2smt.HLPNModelToZ3Converter;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -34,11 +37,14 @@ public class Formula2Promela implements Visitor{
 	String pname_union = ""; // in case "union", set place name for "!"
 	boolean pname_union_status = false;  //once true, indicating output "!" for union
 	
-	public Formula2Promela(ErrorMsg errorMsg, Transition transition, int mode){
+	HashMap<String, Integer> stringConstantMap;//convert string to int for checking
+	
+	public Formula2Promela(ErrorMsg errorMsg, Transition transition, int mode, HashMap<String, Integer> _stringConstantMap){
 		this.errorMsg = errorMsg;
 		iTransition = transition;
 		this.symTable = iTransition.getTransSymbolTable();
 		this.mode = mode;
+		this.stringConstantMap = _stringConstantMap;
 		arrVar = new ArrayList<VarDef>();
 		arrUserVar = new ArrayList<UserVarType>();
 	}
@@ -54,6 +60,18 @@ public class Formula2Promela implements Visitor{
 		if (found == false)
 			arrVar.add(vd);
 	}
+	
+	private int stringConstantToInteger(String s){
+		
+		if(stringConstantMap.containsKey(s)){
+			return stringConstantMap.get(s);
+		}else{
+			this.stringConstantMap.put(s, HLPNModelToZ3Converter.stringConstCounter++);
+			return HLPNModelToZ3Converter.stringConstCounter-1;
+		}
+		
+	}
+	
 	@Override
 	public void visit(AndFormula elem) {
 		
@@ -931,8 +949,9 @@ public class Formula2Promela implements Visitor{
 		}
 		else if (elem.c instanceof StrConstant)
 		{
-			elem.str = ((StrConstant)(elem.c)).str;
-			elem.var_key = ((StrConstant)(elem.c)).str;
+			elem.str_val = ((StrConstant)(elem.c)).str;
+			elem.int_val = this.stringConstantToInteger(elem.str_val);
+			elem.var_key = Integer.toString(elem.int_val);
 		}
 		
 	}
