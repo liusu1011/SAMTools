@@ -249,7 +249,7 @@ public class Formula2SMTZ3 implements Visitor{
 		
 	}
 	
-	public int stringConstantToInteger(String s){
+	private int stringConstantToInteger(String s){
 		
 		if(stringConstantMap.containsKey(s)){
 			return stringConstantMap.get(s);
