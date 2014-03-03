@@ -1,2 +1,0 @@
-spin: /home/su/FIU12Spring-desktop/PIPE+/proModel.pml:613, Error: syntax error	saw ''}' = 125'
-spin: cannot find trail file
