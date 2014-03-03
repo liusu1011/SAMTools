@@ -1,26 +1,34 @@
 unsat
 
 Result:
-added eqs:               1270
-array ax1:               40
-array ax2:               227
-array def const:         2
-array sel const:         22
-assert diseq:            13
-assert lower:            45
-assert upper:            52
-binary propagations:     1426
-conflicts:               56
-datatype accessor ax:    40
-datatype constructor ax: 40
-decisions:               743
-del clause:              987
-eq adapter:              6
-minimized lits:          22
-mk clause:               1075
+add rows:                186317
+added eqs:               7460001
+arith conflicts:         112
+array ax1:               238
+array ax2:               291982
+array def const:         3
+array ext ax:            1471
+array sel const:         2277
+assert diseq:            472181
+assert lower:            802701
+assert upper:            740942
+binary propagations:     8678124
+bound prop:              5264
+conflicts:               99631
+datatype accessor ax:    258
+datatype constructor ax: 258
+decisions:               3689257
+del clause:              500617
+dyn ack:                 40
+eq adapter:              1697
+fixed eqs:               251434
+minimized lits:          811604
+mk clause:               523220
 num checks:              1
-pivots:                  5
-propagations:            1902
-max. heap size:     0.725695 Mbytes
+offset eqs:              302749
+pivots:                  13069
+propagations:            19821037
+restarts:                370
+max. heap size:     9.27012 Mbytes
 
 END OF Result

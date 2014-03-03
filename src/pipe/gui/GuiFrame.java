@@ -51,6 +51,7 @@ import pipe.experiment.editor.gui.ExperimentEditor;
 import pipe.experiment.Experiment;
 import pipe.gui.action.GuiAction;
 import pipe.gui.handler.AnalysisModuleHandler;
+import pipe.gui.handler.BoundedModelCheckingModule;
 import pipe.gui.handler.SimulationModuleHandler;
 import pipe.gui.widgets.FileBrowser;
 import pipe.gui.widgets.Z3Dialog;
@@ -1195,8 +1196,8 @@ public class GuiFrame
                break;
                
             case Pipe.CONVERTZ3:
-            	Z3Dialog z3dlg = new Z3Dialog(appModel);
-            	z3dlg.setVisible(true);
+            	BoundedModelCheckingModule bmc = new BoundedModelCheckingModule();
+            	bmc.boundedModelCheckingWindow();
                break;
                
             default:

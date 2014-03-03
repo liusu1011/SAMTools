@@ -1,7 +1,7 @@
-#define Bound_ConPurse 0
-#define Bound_LogBook 0
-#define Bound_msg_out 0
-#define Bound_msg_in 0
+#define Bound_ConPurse 10
+#define Bound_LogBook 10
+#define Bound_msg_out 10
+#define Bound_msg_in 10
 
 typedef type_ConPurse {
   short ConPurse_field1;
@@ -70,101 +70,112 @@ inline pick(var, place_chan, msg){
 	od
 }
 inline is_enabled_startFrom() {
- &&  place_msg_in?[msg_in]
+  place_ConPurse?[ConPurse] &&  place_msg_in?[msg_in]
 	->
+  place_ConPurse?ConPurse;
   place_msg_in?msg_in;
 	if
-	:: atomic{msg_in.msg_in_field1 == startFrom && true && true}
+	:: atomic{msg_in.msg_in_field1 == 90 && ConPurse.ConPurse_field1 == msg_in.msg_in_field10 && ConPurse.ConPurse_field1==msg_in.msg_in_field2 && ConPurse.ConPurse_field2>=msg_in.msg_in_field3 && ConPurse.ConPurse_field10 == 91 && true && true}
 		->startFrom_is_enabled = true
-	:: else -> {;
+	:: else -> { place_ConPurse!ConPurse;
 		place_msg_in!msg_in}
 	fi
 }
 inline is_enabled_req() {
- &&  place_msg_in?[msg_in]
+  place_ConPurse?[ConPurse] &&  place_msg_in?[msg_in]
 	->
+  place_ConPurse?ConPurse;
   place_msg_in?msg_in;
 	if
-	:: atomic{msg_in.msg_in_field1 == req && true && true}
+	:: atomic{msg_in.msg_in_field1 == 94 && ConPurse.ConPurse_field1 == msg_in.msg_in_field10 && ConPurse.ConPurse_field10 == 92 && true && true}
 		->req_is_enabled = true
-	:: else -> {;
+	:: else -> { place_ConPurse!ConPurse;
 		place_msg_in!msg_in}
 	fi
 }
 inline is_enabled_startTo() {
- &&  place_msg_in?[msg_in]
+  place_ConPurse?[ConPurse] &&  place_msg_in?[msg_in]
 	->
+  place_ConPurse?ConPurse;
   place_msg_in?msg_in;
 	if
-	:: atomic{msg_in.msg_in_field1 == startTo && true && true}
+	:: atomic{msg_in.msg_in_field1 == 97 && ConPurse.ConPurse_field1 == msg_in.msg_in_field10 && ConPurse.ConPurse_field1==msg_in.msg_in_field2 && ConPurse.ConPurse_field2>=msg_in.msg_in_field3 && ConPurse.ConPurse_field10 == 91 && true && true}
 		->startTo_is_enabled = true
-	:: else -> {;
+	:: else -> { place_ConPurse!ConPurse;
 		place_msg_in!msg_in}
 	fi
 }
 inline is_enabled_readExceptionLog() {
- &&  place_msg_in?[msg_in]
+  place_ConPurse?[ConPurse] &&  place_msg_in?[msg_in]
 	->
+  place_ConPurse?ConPurse;
   place_msg_in?msg_in;
 	if
-	:: atomic{msg_in.msg_in_field1 == readExceptionLog && true}
+	:: atomic{msg_in.msg_in_field1 == 99 && ConPurse.ConPurse_field1 == msg_in.msg_in_field10 && ConPurse.ConPurse_field10 == 91 && ConPurse.ConPurse_field3 == 100 && true && true}
 		->readExceptionLog_is_enabled = true
-	:: else -> {;
+	:: else -> { place_ConPurse!ConPurse;
 		place_msg_in!msg_in}
 	fi
 }
 inline is_enabled_clearExceptionLog() {
- &&  place_msg_in?[msg_in]
+  place_ConPurse?[ConPurse] &&  place_msg_in?[msg_in]
 	->
+  place_ConPurse?ConPurse;
   place_msg_in?msg_in;
 	if
-	:: atomic{msg_in.msg_in_field1 == clearExceptionLog && true && true}
+	:: atomic{msg_in.msg_in_field1 == 102 && ConPurse.ConPurse_field1 == msg_in.msg_in_field10 && ConPurse.ConPurse_field10 == 91 && ConPurse.ConPurse_field3 == 100 && true && true}
 		->clearExceptionLog_is_enabled = true
-	:: else -> {;
+	:: else -> { place_ConPurse!ConPurse;
 		place_msg_in!msg_in}
 	fi
 }
 inline is_enabled_ack() {
- &&  place_msg_in?[msg_in]
+  place_ConPurse?[ConPurse] &&  place_msg_in?[msg_in]
 	->
+  place_ConPurse?ConPurse;
   place_msg_in?msg_in;
 	if
-	:: atomic{msg_in.msg_in_field1 == ack && true && true}
+	:: atomic{msg_in.msg_in_field1 == 104 && ConPurse.ConPurse_field1 == msg_in.msg_in_field10 && ConPurse.ConPurse_field10 == 95 && true && true}
 		->ack_is_enabled = true
-	:: else -> {;
+	:: else -> { place_ConPurse!ConPurse;
 		place_msg_in!msg_in}
 	fi
 }
 inline is_enabled_val() {
- &&  place_msg_in?[msg_in]
+  place_ConPurse?[ConPurse] &&  place_msg_in?[msg_in]
 	->
+  place_ConPurse?ConPurse;
   place_msg_in?msg_in;
 	if
-	:: atomic{msg_in.msg_in_field1 == val && true && true}
+	:: atomic{msg_in.msg_in_field1 == 96 && ConPurse.ConPurse_field1 == msg_in.msg_in_field10 && ConPurse.ConPurse_field10 == 98 && true && true}
 		->val_is_enabled = true
-	:: else -> {;
+	:: else -> { place_ConPurse!ConPurse;
 		place_msg_in!msg_in}
 	fi
 }
 inline is_enabled_Abort() {
- &&  place_msg_in?[msg_in]
+  place_ConPurse?[ConPurse] &&  place_LogBook?[LogBook] &&  place_msg_in?[msg_in]
 	->
+  place_ConPurse?ConPurse;
+  place_LogBook?LogBook;
   place_msg_in?msg_in;
 	if
-	:: atomic{((msg_in.msg_in_field1 == startFrom || msg_in.msg_in_field1 == startTo) || msg_in.msg_in_field1 == clearExceptionLog) && true && LogBook.LogBook_field1 == }
+	:: atomic{((msg_in.msg_in_field1 == 90 || msg_in.msg_in_field1 == 97) || msg_in.msg_in_field1 == 102) && ConPurse.ConPurse_field1 == msg_in.msg_in_field10 && (ConPurse.ConPurse_field10 == 98 || ConPurse.ConPurse_field10 == 95) && true && true}
 		->Abort_is_enabled = true
-	:: else -> {;
+	:: else -> { place_ConPurse!ConPurse;
+		place_LogBook!LogBook;
 		place_msg_in!msg_in}
 	fi
 }
 inline is_enabled_readExceptionLogForged() {
- &&  place_msg_in?[msg_in]
+  place_ConPurse?[ConPurse] &&  place_msg_in?[msg_in]
 	->
+  place_ConPurse?ConPurse;
   place_msg_in?msg_in;
 	if
-	:: atomic{msg_in.msg_in_field1 == readExceptionLog && true}
+	:: atomic{msg_in.msg_in_field1 == 99 && ConPurse.ConPurse_field1 == msg_in.msg_in_field10 && ConPurse.ConPurse_field10 == 91 && ConPurse.ConPurse_field3 == 103 && true && true}
 		->readExceptionLogForged_is_enabled = true
-	:: else -> {;
+	:: else -> { place_ConPurse!ConPurse;
 		place_msg_in!msg_in}
 	fi
 }
@@ -173,67 +184,284 @@ inline is_enabled_ether() {
 	->
   place_msg_out?msg_out;
 	if
-	:: atomic{e_in != forged && true}
+	:: atomic{msg_out.msg_out_field1==93 && true}
 		->ether_is_enabled = true
 	:: else -> { place_msg_out!msg_out}
 	fi
 }
 inline fire_startFrom() {
-  msg_out.msg_out_field1 = 	ConPurse.ConPurse_field1 = forged;
+  	ConPurse.ConPurse_field1 = ConPurse.ConPurse_field1;
+	ConPurse.ConPurse_field2 = ConPurse.ConPurse_field2;
+	ConPurse.ConPurse_field3 = ConPurse.ConPurse_field3;
+	ConPurse.ConPurse_field4 = (ConPurse.ConPurse_field4 + 1);
+	ConPurse.ConPurse_field5 = ConPurse.ConPurse_field1;
+	ConPurse.ConPurse_field6 = msg_in.msg_in_field2;
+	ConPurse.ConPurse_field7 = msg_in.msg_in_field3;
+	ConPurse.ConPurse_field8 = ConPurse.ConPurse_field4;
+	ConPurse.ConPurse_field9 = msg_in.msg_in_field4;
+	ConPurse.ConPurse_field10 = 92;
+	ConPurse.ConPurse_field11 = ConPurse.ConPurse_field11;
+	ConPurse.ConPurse_field12 = ConPurse.ConPurse_field12;
+	ConPurse.ConPurse_field13 = ConPurse.ConPurse_field13;
+	ConPurse.ConPurse_field14 = ConPurse.ConPurse_field14;
+	ConPurse.ConPurse_field15 = ConPurse.ConPurse_field15;
 ;
+  	msg_out.msg_out_field1 = 93;
+	msg_out.msg_out_field2 = msg_in.msg_in_field2;
+	msg_out.msg_out_field3 = msg_in.msg_in_field3;
+	msg_out.msg_out_field4 = msg_in.msg_in_field4;
+	msg_out.msg_out_field5 = msg_in.msg_in_field5;
+	msg_out.msg_out_field6 = msg_in.msg_in_field6;
+	msg_out.msg_out_field7 = msg_in.msg_in_field7;
+	msg_out.msg_out_field8 = msg_in.msg_in_field8;
+	msg_out.msg_out_field9 = msg_in.msg_in_field9;
+	msg_out.msg_out_field10 = msg_in.msg_in_field10;
+;
+  place_ConPurse!ConPurse;
   place_msg_out!msg_out;
   startFrom_is_enabled = false
 }
 inline fire_req() {
-  msg_out.msg_out_field1 = 	ConPurse.ConPurse_field1 = val;
+  	ConPurse.ConPurse_field1 = ConPurse.ConPurse_field1;
+	ConPurse.ConPurse_field2 = (ConPurse.ConPurse_field2 - msg_in.msg_in_field7);
+	ConPurse.ConPurse_field3 = ConPurse.ConPurse_field3;
+	ConPurse.ConPurse_field4 = ConPurse.ConPurse_field4;
 	ConPurse.ConPurse_field5 = ConPurse.ConPurse_field5;
 	ConPurse.ConPurse_field6 = ConPurse.ConPurse_field6;
 	ConPurse.ConPurse_field7 = ConPurse.ConPurse_field7;
 	ConPurse.ConPurse_field8 = ConPurse.ConPurse_field8;
 	ConPurse.ConPurse_field9 = ConPurse.ConPurse_field9;
+	ConPurse.ConPurse_field10 = 95;
+	ConPurse.ConPurse_field11 = ConPurse.ConPurse_field11;
+	ConPurse.ConPurse_field12 = ConPurse.ConPurse_field12;
+	ConPurse.ConPurse_field13 = ConPurse.ConPurse_field13;
+	ConPurse.ConPurse_field14 = ConPurse.ConPurse_field14;
+	ConPurse.ConPurse_field15 = ConPurse.ConPurse_field15;
 ;
+  	msg_out.msg_out_field1 = 96;
+	msg_out.msg_out_field2 = msg_in.msg_in_field2;
+	msg_out.msg_out_field3 = msg_in.msg_in_field3;
+	msg_out.msg_out_field4 = msg_in.msg_in_field4;
+	msg_out.msg_out_field5 = ConPurse.ConPurse_field5;
+	msg_out.msg_out_field6 = ConPurse.ConPurse_field6;
+	msg_out.msg_out_field7 = ConPurse.ConPurse_field7;
+	msg_out.msg_out_field8 = ConPurse.ConPurse_field8;
+	msg_out.msg_out_field9 = ConPurse.ConPurse_field9;
+	msg_out.msg_out_field10 = msg_in.msg_in_field6;
+;
+  place_ConPurse!ConPurse;
   place_msg_out!msg_out;
   req_is_enabled = false
 }
 inline fire_startTo() {
-  msg_out.msg_out_field1 = 	ConPurse.ConPurse_field1 = req;
-	ConPurse.ConPurse_field6 = ConPurse.ConPurse_field1;
+  	ConPurse.ConPurse_field1 = ConPurse.ConPurse_field1;
+	ConPurse.ConPurse_field2 = ConPurse.ConPurse_field2;
+	ConPurse.ConPurse_field3 = ConPurse.ConPurse_field3;
+	ConPurse.ConPurse_field4 = (ConPurse.ConPurse_field4 + 1);
+	ConPurse.ConPurse_field5 = ConPurse.ConPurse_field1;
+	ConPurse.ConPurse_field6 = msg_in.msg_in_field2;
+	ConPurse.ConPurse_field7 = msg_in.msg_in_field3;
 	ConPurse.ConPurse_field8 = ConPurse.ConPurse_field4;
+	ConPurse.ConPurse_field9 = msg_in.msg_in_field4;
+	ConPurse.ConPurse_field10 = 98;
+	ConPurse.ConPurse_field11 = ConPurse.ConPurse_field11;
+	ConPurse.ConPurse_field12 = ConPurse.ConPurse_field12;
+	ConPurse.ConPurse_field13 = ConPurse.ConPurse_field13;
+	ConPurse.ConPurse_field14 = ConPurse.ConPurse_field14;
+	ConPurse.ConPurse_field15 = ConPurse.ConPurse_field15;
 ;
+  	msg_out.msg_out_field1 = 94;
+	msg_out.msg_out_field2 = msg_in.msg_in_field2;
+	msg_out.msg_out_field3 = msg_in.msg_in_field3;
+	msg_out.msg_out_field4 = msg_in.msg_in_field4;
+	msg_out.msg_out_field5 = msg_in.msg_in_field2;
+	msg_out.msg_out_field6 = ConPurse.ConPurse_field1;
+	msg_out.msg_out_field7 = msg_in.msg_in_field3;
+	msg_out.msg_out_field8 = ConPurse.ConPurse_field4;
+	msg_out.msg_out_field9 = msg_in.msg_in_field4;
+	msg_out.msg_out_field10 = msg_in.msg_in_field2;
+;
+  place_ConPurse!ConPurse;
   place_msg_out!msg_out;
   startTo_is_enabled = false
 }
 inline fire_readExceptionLog() {
+  ConPurse.ConPurse_field1 = ConPurse.ConPurse_field1;
+  ConPurse.ConPurse_field2 = ConPurse.ConPurse_field2;
+  ConPurse.ConPurse_field3 = ConPurse.ConPurse_field3;
+  ConPurse.ConPurse_field4 = ConPurse.ConPurse_field4;
+  ConPurse.ConPurse_field5 = ConPurse.ConPurse_field5;
+  ConPurse.ConPurse_field6 = ConPurse.ConPurse_field6;
+  ConPurse.ConPurse_field7 = ConPurse.ConPurse_field7;
+  ConPurse.ConPurse_field8 = ConPurse.ConPurse_field8;
+  ConPurse.ConPurse_field9 = ConPurse.ConPurse_field9;
+  ConPurse.ConPurse_field10 = ConPurse.ConPurse_field10;
+  ConPurse.ConPurse_field11 = ConPurse.ConPurse_field11;
+  ConPurse.ConPurse_field12 = ConPurse.ConPurse_field12;
+  ConPurse.ConPurse_field13 = ConPurse.ConPurse_field13;
+  ConPurse.ConPurse_field14 = ConPurse.ConPurse_field14;
+  ConPurse.ConPurse_field15 = ConPurse.ConPurse_field15;
+  	msg_out.msg_out_field1 = 101;
+	msg_out.msg_out_field2 = msg_in.msg_in_field2;
+	msg_out.msg_out_field3 = msg_in.msg_in_field3;
+	msg_out.msg_out_field4 = msg_in.msg_in_field4;
+	msg_out.msg_out_field5 = ConPurse.ConPurse_field11;
+	msg_out.msg_out_field6 = ConPurse.ConPurse_field12;
+	msg_out.msg_out_field7 = ConPurse.ConPurse_field13;
+	msg_out.msg_out_field8 = ConPurse.ConPurse_field14;
+	msg_out.msg_out_field9 = ConPurse.ConPurse_field15;
+	msg_out.msg_out_field10 = msg_in.msg_in_field10;
+;
+  place_ConPurse!ConPurse;
   place_msg_out!msg_out;
   readExceptionLog_is_enabled = false
 }
 inline fire_clearExceptionLog() {
-  msg_out.msg_out_field1 = 	ConPurse.ConPurse_field1 = forged;
-;
-  place_msg_out!msg_out;
-  clearExceptionLog_is_enabled = false
-}
-inline fire_ack() {
-  msg_out.msg_out_field1 = 	ConPurse.ConPurse_field1 = forged;
-;
-  place_msg_out!msg_out;
-  ack_is_enabled = false
-}
-inline fire_val() {
-  msg_out.msg_out_field1 = 	ConPurse.ConPurse_field1 = ack;
+  	ConPurse.ConPurse_field1 = ConPurse.ConPurse_field1;
+	ConPurse.ConPurse_field2 = ConPurse.ConPurse_field2;
+	ConPurse.ConPurse_field3 = 103;
+	ConPurse.ConPurse_field4 = ConPurse.ConPurse_field4;
 	ConPurse.ConPurse_field5 = ConPurse.ConPurse_field5;
 	ConPurse.ConPurse_field6 = ConPurse.ConPurse_field6;
 	ConPurse.ConPurse_field7 = ConPurse.ConPurse_field7;
 	ConPurse.ConPurse_field8 = ConPurse.ConPurse_field8;
 	ConPurse.ConPurse_field9 = ConPurse.ConPurse_field9;
+	ConPurse.ConPurse_field10 = ConPurse.ConPurse_field10;
+	ConPurse.ConPurse_field11 = ConPurse.ConPurse_field11;
+	ConPurse.ConPurse_field12 = ConPurse.ConPurse_field12;
+	ConPurse.ConPurse_field13 = ConPurse.ConPurse_field13;
+	ConPurse.ConPurse_field14 = ConPurse.ConPurse_field14;
+	ConPurse.ConPurse_field15 = ConPurse.ConPurse_field15;
 ;
+  	msg_out.msg_out_field1 = 93;
+	msg_out.msg_out_field2 = msg_in.msg_in_field2;
+	msg_out.msg_out_field3 = msg_in.msg_in_field3;
+	msg_out.msg_out_field4 = msg_in.msg_in_field4;
+	msg_out.msg_out_field5 = msg_in.msg_in_field5;
+	msg_out.msg_out_field6 = msg_in.msg_in_field6;
+	msg_out.msg_out_field7 = msg_in.msg_in_field7;
+	msg_out.msg_out_field8 = msg_in.msg_in_field8;
+	msg_out.msg_out_field9 = msg_in.msg_in_field9;
+	msg_out.msg_out_field10 = msg_in.msg_in_field10;
+;
+  place_ConPurse!ConPurse;
+  place_msg_out!msg_out;
+  clearExceptionLog_is_enabled = false
+}
+inline fire_ack() {
+  	ConPurse.ConPurse_field1 = ConPurse.ConPurse_field1;
+	ConPurse.ConPurse_field2 = ConPurse.ConPurse_field2;
+	ConPurse.ConPurse_field3 = ConPurse.ConPurse_field3;
+	ConPurse.ConPurse_field4 = ConPurse.ConPurse_field4;
+	ConPurse.ConPurse_field5 = ConPurse.ConPurse_field5;
+	ConPurse.ConPurse_field6 = ConPurse.ConPurse_field6;
+	ConPurse.ConPurse_field7 = ConPurse.ConPurse_field7;
+	ConPurse.ConPurse_field8 = ConPurse.ConPurse_field8;
+	ConPurse.ConPurse_field9 = ConPurse.ConPurse_field9;
+	ConPurse.ConPurse_field10 = 91;
+	ConPurse.ConPurse_field11 = ConPurse.ConPurse_field11;
+	ConPurse.ConPurse_field12 = ConPurse.ConPurse_field12;
+	ConPurse.ConPurse_field13 = ConPurse.ConPurse_field13;
+	ConPurse.ConPurse_field14 = ConPurse.ConPurse_field14;
+	ConPurse.ConPurse_field15 = ConPurse.ConPurse_field15;
+;
+  	msg_out.msg_out_field1 = 93;
+	msg_out.msg_out_field2 = msg_in.msg_in_field2;
+	msg_out.msg_out_field3 = msg_in.msg_in_field3;
+	msg_out.msg_out_field4 = msg_in.msg_in_field4;
+	msg_out.msg_out_field5 = msg_in.msg_in_field5;
+	msg_out.msg_out_field6 = msg_in.msg_in_field6;
+	msg_out.msg_out_field7 = msg_in.msg_in_field7;
+	msg_out.msg_out_field8 = msg_in.msg_in_field8;
+	msg_out.msg_out_field9 = msg_in.msg_in_field9;
+	msg_out.msg_out_field10 = msg_in.msg_in_field10;
+;
+  place_ConPurse!ConPurse;
+  place_msg_out!msg_out;
+  ack_is_enabled = false
+}
+inline fire_val() {
+  	ConPurse.ConPurse_field1 = ConPurse.ConPurse_field1;
+	ConPurse.ConPurse_field2 = (ConPurse.ConPurse_field2 + msg_in.msg_in_field7);
+	ConPurse.ConPurse_field3 = ConPurse.ConPurse_field3;
+	ConPurse.ConPurse_field4 = ConPurse.ConPurse_field4;
+	ConPurse.ConPurse_field5 = ConPurse.ConPurse_field5;
+	ConPurse.ConPurse_field6 = ConPurse.ConPurse_field6;
+	ConPurse.ConPurse_field7 = ConPurse.ConPurse_field7;
+	ConPurse.ConPurse_field8 = ConPurse.ConPurse_field8;
+	ConPurse.ConPurse_field9 = ConPurse.ConPurse_field9;
+	ConPurse.ConPurse_field10 = 91;
+	ConPurse.ConPurse_field11 = ConPurse.ConPurse_field11;
+	ConPurse.ConPurse_field12 = ConPurse.ConPurse_field12;
+	ConPurse.ConPurse_field13 = ConPurse.ConPurse_field13;
+	ConPurse.ConPurse_field14 = ConPurse.ConPurse_field14;
+	ConPurse.ConPurse_field15 = ConPurse.ConPurse_field15;
+;
+  	msg_out.msg_out_field1 = 104;
+	msg_out.msg_out_field2 = msg_in.msg_in_field2;
+	msg_out.msg_out_field3 = msg_in.msg_in_field3;
+	msg_out.msg_out_field4 = msg_in.msg_in_field4;
+	msg_out.msg_out_field5 = ConPurse.ConPurse_field5;
+	msg_out.msg_out_field6 = ConPurse.ConPurse_field6;
+	msg_out.msg_out_field7 = ConPurse.ConPurse_field7;
+	msg_out.msg_out_field8 = ConPurse.ConPurse_field8;
+	msg_out.msg_out_field9 = ConPurse.ConPurse_field9;
+	msg_out.msg_out_field10 = msg_in.msg_in_field5;
+;
+  place_ConPurse!ConPurse;
   place_msg_out!msg_out;
   val_is_enabled = false
 }
 inline fire_Abort() {
+  	ConPurse.ConPurse_field1 = ConPurse.ConPurse_field1;
+	ConPurse.ConPurse_field2 = ConPurse.ConPurse_field2;
+	ConPurse.ConPurse_field3 = 100;
+	ConPurse.ConPurse_field4 = ConPurse.ConPurse_field4;
+	ConPurse.ConPurse_field5 = (ConPurse.ConPurse_field5 + 1);
+	ConPurse.ConPurse_field6 = ConPurse.ConPurse_field6;
+	ConPurse.ConPurse_field7 = ConPurse.ConPurse_field7;
+	ConPurse.ConPurse_field8 = ConPurse.ConPurse_field8;
+	ConPurse.ConPurse_field9 = ConPurse.ConPurse_field9;
+	ConPurse.ConPurse_field10 = 91;
+	ConPurse.ConPurse_field11 = ConPurse.ConPurse_field5;
+	ConPurse.ConPurse_field12 = ConPurse.ConPurse_field6;
+	ConPurse.ConPurse_field13 = ConPurse.ConPurse_field7;
+	ConPurse.ConPurse_field14 = ConPurse.ConPurse_field8;
+	ConPurse.ConPurse_field15 = ConPurse.ConPurse_field9;
+;
+  ;
+  place_ConPurse!ConPurse;
+  place_LogBook!LogBook;
   Abort_is_enabled = false
 }
 inline fire_readExceptionLogForged() {
+  ConPurse.ConPurse_field1 = ConPurse.ConPurse_field1;
+  ConPurse.ConPurse_field2 = ConPurse.ConPurse_field2;
+  ConPurse.ConPurse_field3 = ConPurse.ConPurse_field3;
+  ConPurse.ConPurse_field4 = ConPurse.ConPurse_field4;
+  ConPurse.ConPurse_field5 = ConPurse.ConPurse_field5;
+  ConPurse.ConPurse_field6 = ConPurse.ConPurse_field6;
+  ConPurse.ConPurse_field7 = ConPurse.ConPurse_field7;
+  ConPurse.ConPurse_field8 = ConPurse.ConPurse_field8;
+  ConPurse.ConPurse_field9 = ConPurse.ConPurse_field9;
+  ConPurse.ConPurse_field10 = ConPurse.ConPurse_field10;
+  ConPurse.ConPurse_field11 = ConPurse.ConPurse_field11;
+  ConPurse.ConPurse_field12 = ConPurse.ConPurse_field12;
+  ConPurse.ConPurse_field13 = ConPurse.ConPurse_field13;
+  ConPurse.ConPurse_field14 = ConPurse.ConPurse_field14;
+  ConPurse.ConPurse_field15 = ConPurse.ConPurse_field15;
+  	msg_out.msg_out_field1 = 93;
+	msg_out.msg_out_field2 = msg_in.msg_in_field2;
+	msg_out.msg_out_field3 = msg_in.msg_in_field3;
+	msg_out.msg_out_field4 = msg_in.msg_in_field4;
+	msg_out.msg_out_field5 = msg_in.msg_in_field5;
+	msg_out.msg_out_field6 = msg_in.msg_in_field6;
+	msg_out.msg_out_field7 = msg_in.msg_in_field7;
+	msg_out.msg_out_field8 = msg_in.msg_in_field8;
+	msg_out.msg_out_field9 = msg_in.msg_in_field9;
+	msg_out.msg_out_field10 = msg_in.msg_in_field10;
+;
+  place_ConPurse!ConPurse;
   place_msg_out!msg_out;
   readExceptionLogForged_is_enabled = false
 }
@@ -354,34 +582,34 @@ proctype Main() {
 }
 init {
   type_ConPurse ConPurse;
-  ConPurse.ConPurse_field1=arda;
+  ConPurse.ConPurse_field1=11000;
   ConPurse.ConPurse_field2=100;
-  ConPurse.ConPurse_field3=true;
+  ConPurse.ConPurse_field3=100;
   ConPurse.ConPurse_field4=1;
-  ConPurse.ConPurse_field5=mike;
-  ConPurse.ConPurse_field6=arda;
+  ConPurse.ConPurse_field5=11001;
+  ConPurse.ConPurse_field6=24;
   ConPurse.ConPurse_field7=50;
   ConPurse.ConPurse_field8=1;
   ConPurse.ConPurse_field9=1;
-  ConPurse.ConPurse_field10=idle;
-  ConPurse.ConPurse_field11=none;
-  ConPurse.ConPurse_field12=none;
+  ConPurse.ConPurse_field10=91;
+  ConPurse.ConPurse_field11=11010;
+  ConPurse.ConPurse_field12=26;
   ConPurse.ConPurse_field13=0;
   ConPurse.ConPurse_field14=1;
   ConPurse.ConPurse_field15=1;
   place_ConPurse!ConPurse;
-  ConPurse.ConPurse_field1=bob;
+  ConPurse.ConPurse_field1=11011;
   ConPurse.ConPurse_field2=200;
-  ConPurse.ConPurse_field3=true;
+  ConPurse.ConPurse_field3=100;
   ConPurse.ConPurse_field4=1;
-  ConPurse.ConPurse_field5=bob;
-  ConPurse.ConPurse_field6=arda;
+  ConPurse.ConPurse_field5=27;
+  ConPurse.ConPurse_field6=24;
   ConPurse.ConPurse_field7=50;
   ConPurse.ConPurse_field8=1;
   ConPurse.ConPurse_field9=1;
-  ConPurse.ConPurse_field10=idle;
-  ConPurse.ConPurse_field11=none;
-  ConPurse.ConPurse_field12=none;
+  ConPurse.ConPurse_field10=91;
+  ConPurse.ConPurse_field11=26;
+  ConPurse.ConPurse_field12=26;
   ConPurse.ConPurse_field13=0;
   ConPurse.ConPurse_field14=1;
   ConPurse.ConPurse_field15=1;
@@ -389,28 +617,28 @@ init {
   type_LogBook LogBook;
   type_msg_out msg_out;
   type_msg_in msg_in;
-  msg_in.msg_in_field1=startFrom;
-  msg_in.msg_in_field2=bob;
+  msg_in.msg_in_field1=90;
+  msg_in.msg_in_field2=27;
   msg_in.msg_in_field3=50;
   msg_in.msg_in_field4=1;
-  msg_in.msg_in_field5=arda;
-  msg_in.msg_in_field6=bob;
+  msg_in.msg_in_field5=24;
+  msg_in.msg_in_field6=27;
   msg_in.msg_in_field7=50;
   msg_in.msg_in_field8=1;
   msg_in.msg_in_field9=1;
-  msg_in.msg_in_field10=arda;
+  msg_in.msg_in_field10=24;
   place_msg_in!msg_in;
-  msg_in.msg_in_field1=startTo;
-  msg_in.msg_in_field2=arda;
+  msg_in.msg_in_field1=97;
+  msg_in.msg_in_field2=24;
   msg_in.msg_in_field3=50;
   msg_in.msg_in_field4=1;
-  msg_in.msg_in_field5=arda;
-  msg_in.msg_in_field6=bob;
+  msg_in.msg_in_field5=24;
+  msg_in.msg_in_field6=27;
   msg_in.msg_in_field7=50;
   msg_in.msg_in_field8=1;
   msg_in.msg_in_field9=1;
-  msg_in.msg_in_field10=bob;
+  msg_in.msg_in_field10=27;
   place_msg_in!msg_in;
 run Main()
 }
-ltl f{<>()}
+ltl f{[]((place_ConPurse?ConPurse.ConPurse_field2)==50)}

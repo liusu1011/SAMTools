@@ -102,7 +102,7 @@ public class HLPNModelToZ3Converter {
 		z3str.append(buildStates());			
 		z3str.append(iniStates());
 		z3str.append(buildTransitions());
-		pb.set_new_bakery_protocal_mutex();
+		pb.setMondexProperties();
 		z3str.append(pb.buildProperties());
 		z3str.append("\n}\n");
 		return z3str.toString();
@@ -119,7 +119,7 @@ public class HLPNModelToZ3Converter {
 //		z3str.append(iniTokens());
 		z3str.append(buildTransitions());
 		z3str.append(buildLoopFreePath());
-		pb.set_new_bakery_protocal_mutex();
+//		pb.set_new_bakery_protocal_mutex();
 		z3str.append(pb.buildInductionProperties());
 		z3str.append("\n}\n");
 		return z3str.toString();
@@ -223,7 +223,7 @@ public class HLPNModelToZ3Converter {
 			if(type.equals("induction"))
 				p = Runtime.getRuntime().exec("./LinuxRunZ3.sh "+model.pnmlName+"InductionChecker.c");
 			else
-				p = Runtime.getRuntime().exec("./LinuxRunZ3.sh "+model.pnmlName+"Checker.c");
+				p = Runtime.getRuntime().exec("./MacRunZ3.sh "+model.pnmlName+"Checker.c");
 			p.waitFor();
 			System.out.println("Z3Checking Finish!!!");
 			long endTime   = System.currentTimeMillis();

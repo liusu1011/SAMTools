@@ -89,7 +89,8 @@ public class Formula2Promela implements Visitor{
 			leftPre = ((CpFormula)(elem.f1)).strPre;
 			leftPost = ((CpFormula)(elem.f1)).strPost;
 		}else if(elem.f1 instanceof CpxFormula){
-			//TODO: CpxFormula
+			leftPre = ((CpxFormula)(elem.f1)).strPre;
+			leftPost = ((CpxFormula)(elem.f1)).strPost;
 		}
 		
 		if(elem.f2 instanceof AtFormula){
@@ -99,7 +100,8 @@ public class Formula2Promela implements Visitor{
 			rightPre = ((CpFormula)(elem.f2)).strPre;
 			rightPost = ((CpFormula)(elem.f2)).strPost;
 		}else if(elem.f2 instanceof CpxFormula){
-			//TODO: CpxFormula
+			rightPre = ((CpxFormula)(elem.f2)).strPre;
+			rightPost = ((CpxFormula)(elem.f2)).strPost;
 		}
 		
 		if(("").equals(leftPre))leftPre = "true";
@@ -279,14 +281,14 @@ public class Formula2Promela implements Visitor{
 			formulaPost = ((CpFormula)(elem.f)).strPost;
 		}
 		
-		//write promela for complex formula
-		elem.strPre = "atomic{\n";
-		elem.strPre += "	pick(var_"+vPlaceName+", place_"+vPlaceName
-			+", "+vPlaceName+");\n";
-		elem.strPre += "	place_"+vPlaceName+"?<"+vPlaceName+">;\n";
-		elem.strPre += "	"+formulaPre+"\n";
-		elem.strPre += "	}";
-		
+		//in case test either one token in powerset place, we need to non-deter pick a token from powerset to test
+//		elem.strPre = "atomic{\n";
+//		elem.strPre += "	pick(var_"+vPlaceName+", place_"+vPlaceName
+//			+", "+vPlaceName+");\n";
+//		elem.strPre += "	place_"+vPlaceName+"?<"+vPlaceName+">;\n";
+//		elem.strPre += "	"+formulaPre+"\n";
+//		elem.strPre += "	}";
+		elem.strPre = formulaPre;
 		elem.strPost = formulaPost;
 	}
 
@@ -304,7 +306,7 @@ public class Formula2Promela implements Visitor{
 			if(elem.t2 instanceof ExpTerm){
 				t2PlaceName = ((ExpTerm)(elem.t2)).placeName;
 				if(t1PlaceName.equalsIgnoreCase(t2PlaceName) && !("").equals(t1PlaceName)){
-					elem.str += "	place_"+t1PlaceName+"?"+t1PlaceName+";\n";
+//					elem.str += "	place_"+t1PlaceName+"?"+t1PlaceName+";\n";
 				}
 				
 			}
@@ -321,6 +323,30 @@ public class Formula2Promela implements Visitor{
 		elem.t1.accept(this);
 		elem.t2.accept(this);
 		
+		String left = "";
+		String right = "";
+		
+		if(elem.t1 instanceof VariableTerm){
+			left = ((VariableTerm)(elem.t1)).pVarName;
+		}else if(elem.t1 instanceof ConstantTerm){
+			left = ((ConstantTerm)(elem.t1)).var_key;
+		}else if(elem.t1 instanceof ExpTerm){
+			left = ((ExpTerm)(elem.t1)).str;
+		}else if(elem.t1 instanceof EmptyTerm){
+			//TODO: emptyterm
+		}
+		
+		if(elem.t2 instanceof VariableTerm){
+			right = ((VariableTerm)(elem.t2)).pVarName;
+		}else if(elem.t2 instanceof ConstantTerm){
+			right = ((ConstantTerm)(elem.t2)).var_key;
+		}else if(elem.t2 instanceof ExpTerm){
+			right = ((ExpTerm)(elem.t2)).str;
+		}else if(elem.t2 instanceof EmptyTerm){
+			//TODO: emptyterm
+		}
+		
+		elem.str = "("+left+ " / " + right+")";
 	}
 
 	@Override
@@ -375,6 +401,14 @@ public class Formula2Promela implements Visitor{
 				}
 			}
 			
+//			if(thisPlace.getDataType().getPow()) {
+//				if(elem.t2 instanceof ExpTerm) {
+//					if(thisPlace != null){
+//						elem.strPost += "  "+((ExpTerm)(elem.t2)).str+";\n";
+//					}
+//				}
+//				return;
+//			}
 			
 			if(elem.t1 instanceof VariableTerm){
 				if(((VariableTerm)(elem.t1)).kind == 0){//left  hand side is idVariable
@@ -396,6 +430,18 @@ public class Formula2Promela implements Visitor{
 						}
 					}
 					else if(elem.t2 instanceof ExpTerm){
+						//if right is set exp
+						if(((ExpTerm)(elem.t2)).e instanceof SExp) {
+							if(thisPlace != null){
+								String temp = "  "+((ExpTerm)(elem.t2)).str+";\n";
+								CharSequence csPlaceName = elem.t1.placeName;
+								CharSequence sub = "$";
+								String nt = temp.replace(sub, csPlaceName);
+								elem.strPost += nt;
+							}
+							return;
+						}
+						
 						if(thisPlace != null){
 							elem.strPost += "  "+elem.t1.placeName+"."+elem.t1.placeName+"_field1"
 									+" = "+((ExpTerm)(elem.t2)).str+";\n";
@@ -464,28 +510,26 @@ public class Formula2Promela implements Visitor{
 		elem.t1.accept(this);
 		elem.t2.accept(this);
 		
-		boolean postcond = false;
+		String left = "";
+		String right = "";
 		
-		if (elem.t1 instanceof VariableTerm)
-		{
-			postcond = ((VariableTerm)(elem.t1)).postcond;
-		}
-		else if (elem.t1 instanceof ExpTerm)
-		{
-			postcond = ((ExpTerm)(elem.t1)).postcond;
+		if(elem.t1 instanceof VariableTerm) {
+			left = ((VariableTerm)(elem.t1)).pVarName;
+		}else if(elem.t1 instanceof ConstantTerm) {
+			left = ((ConstantTerm)(elem.t1)).var_key;
+		}else if(elem.t1 instanceof ExpTerm) {
+			left = ((ExpTerm)(elem.t1)).str;
 		}
 		
-		if (postcond == false)
-		{
-			//precondition
-			elem.strPre = elem.t1.str + " >= " + elem.t2.str;
-			
+		if(elem.t2 instanceof VariableTerm) {
+			right = ((VariableTerm)(elem.t2)).pVarName;
+		}else if(elem.t2 instanceof ConstantTerm) {
+			right = ((ConstantTerm)(elem.t2)).var_key;
+		}else if(elem.t2 instanceof ExpTerm) {
+			right = ((ExpTerm)(elem.t2)).str;
 		}
-		else {
-			//postcondition
-
-
-		}
+		
+		elem.strPre = left + ">=" + right;
 		
 	}
 
@@ -496,32 +540,24 @@ public class Formula2Promela implements Visitor{
 		
 		String left = "";
 		String right = "";
-		String placeName = "";
 		
-		if(elem.t1 instanceof VariableTerm){
-			//if it is idVariable not index variable
-			placeName = ((VariableTerm)(elem.t1)).placeName;
-			left = placeName+"."+placeName+"_field1";
-		}else if(elem.t1 instanceof ConstantTerm){
+		if(elem.t1 instanceof VariableTerm) {
+			left = ((VariableTerm)(elem.t1)).pVarName;
+		}else if(elem.t1 instanceof ConstantTerm) {
 			left = ((ConstantTerm)(elem.t1)).var_key;
-		}else if(elem.t1 instanceof ExpTerm){
-			//TODO: expterm
-		}else if(elem.t1 instanceof EmptyTerm){
-			//TODO: emptyterm
+		}else if(elem.t1 instanceof ExpTerm) {
+			left = ((ExpTerm)(elem.t1)).str;
 		}
 		
-		if(elem.t2 instanceof VariableTerm){
-			placeName = ((VariableTerm)(elem.t2)).placeName;
-			right = placeName+"."+placeName+"_field1";
-		}else if(elem.t2 instanceof ConstantTerm){
+		if(elem.t2 instanceof VariableTerm) {
+			right = ((VariableTerm)(elem.t2)).pVarName;
+		}else if(elem.t2 instanceof ConstantTerm) {
 			right = ((ConstantTerm)(elem.t2)).var_key;
-		}else if(elem.t2 instanceof ExpTerm){
-			//TODO: expterm
-		}else if(elem.t2 instanceof EmptyTerm){
-			//TODO: emptyterm
+		}else if(elem.t2 instanceof ExpTerm) {
+			right = ((ExpTerm)(elem.t2)).str;
 		}
 		
-		elem.strPre = left+" > "+right;
+		elem.strPre = left + ">" + right;
 	}
 
 	@Override
@@ -643,28 +679,93 @@ public class Formula2Promela implements Visitor{
 
 		elem.t1.accept(this);
 		elem.t2.accept(this);
-		 
+		
+		//TODO: specify in rel
 	}
 
 	@Override
 	public void visit(LeqRel elem) {
 		elem.t1.accept(this);
 		elem.t2.accept(this);
-
+		String left = "";
+		String right = "";
+		
+		if(elem.t1 instanceof VariableTerm) {
+			left = ((VariableTerm)(elem.t1)).pVarName;
+		}else if(elem.t1 instanceof ConstantTerm) {
+			left = ((ConstantTerm)(elem.t1)).var_key;
+		}else if(elem.t1 instanceof ExpTerm) {
+			left = ((ExpTerm)(elem.t1)).str;
+		}
+		
+		if(elem.t2 instanceof VariableTerm) {
+			right = ((VariableTerm)(elem.t2)).pVarName;
+		}else if(elem.t2 instanceof ConstantTerm) {
+			right = ((ConstantTerm)(elem.t2)).var_key;
+		}else if(elem.t2 instanceof ExpTerm) {
+			right = ((ExpTerm)(elem.t2)).str;
+		}
+		
+		elem.strPre = left + "<=" + right;		
 	}
 
 	@Override
 	public void visit(LtRel elem) {
 		elem.t1.accept(this);
 		elem.t2.accept(this);
-
+		
+		String left = "";
+		String right = "";
+		
+		if(elem.t1 instanceof VariableTerm) {
+			left = ((VariableTerm)(elem.t1)).pVarName;
+		}else if(elem.t1 instanceof ConstantTerm) {
+			left = ((ConstantTerm)(elem.t1)).var_key;
+		}else if(elem.t1 instanceof ExpTerm) {
+			left = ((ExpTerm)(elem.t1)).str;
+		}
+		
+		if(elem.t2 instanceof VariableTerm) {
+			right = ((VariableTerm)(elem.t2)).pVarName;
+		}else if(elem.t2 instanceof ConstantTerm) {
+			right = ((ConstantTerm)(elem.t2)).var_key;
+		}else if(elem.t2 instanceof ExpTerm) {
+			right = ((ExpTerm)(elem.t2)).str;
+		}
+		
+		elem.strPre = left + "<" + right;
 	}
 
 	@Override
 	public void visit(Minus elem) {
+		
 		elem.t1.accept(this);
 		elem.t2.accept(this);
-		elem.str = elem.t1.str + " - " + elem.t2.str;
+		
+		String left = "";
+		String right = "";
+		
+		if(elem.t1 instanceof VariableTerm){
+			left = ((VariableTerm)(elem.t1)).pVarName;
+		}else if(elem.t1 instanceof ConstantTerm){
+			left = ((ConstantTerm)(elem.t1)).var_key;
+		}else if(elem.t1 instanceof ExpTerm){
+			left = ((ExpTerm)(elem.t1)).str;
+		}else if(elem.t1 instanceof EmptyTerm){
+			//TODO: emptyterm
+		}
+		
+		if(elem.t2 instanceof VariableTerm){
+			right = ((VariableTerm)(elem.t2)).pVarName;
+		}else if(elem.t2 instanceof ConstantTerm){
+			right = ((ConstantTerm)(elem.t2)).var_key;
+		}else if(elem.t2 instanceof ExpTerm){
+			right = ((ExpTerm)(elem.t2)).str;
+		}else if(elem.t2 instanceof EmptyTerm){
+			//TODO: emptyterm
+		}
+		
+		elem.str = "("+left+ " - " + right+")";
 
 	}
 
@@ -703,11 +804,51 @@ public class Formula2Promela implements Visitor{
 		elem.t1.accept(this);
 		elem.t2.accept(this);
 		
+		String left = "";
+		String right = "";
+		
+		if(elem.t1 instanceof VariableTerm){
+			left = ((VariableTerm)(elem.t1)).pVarName;
+		}else if(elem.t1 instanceof ConstantTerm){
+			left = ((ConstantTerm)(elem.t1)).var_key;
+		}else if(elem.t1 instanceof ExpTerm){
+			left = ((ExpTerm)(elem.t1)).str;
+		}else if(elem.t1 instanceof EmptyTerm){
+			//TODO: emptyterm
+		}
+		
+		if(elem.t2 instanceof VariableTerm){
+			right = ((VariableTerm)(elem.t2)).pVarName;
+		}else if(elem.t2 instanceof ConstantTerm){
+			right = ((ConstantTerm)(elem.t2)).var_key;
+		}else if(elem.t2 instanceof ExpTerm){
+			right = ((ExpTerm)(elem.t2)).str;
+		}else if(elem.t2 instanceof EmptyTerm){
+			//TODO: emptyterm
+		}
+		
+		elem.str = "("+left+ " * " + right+")";
+		
 	}
 
 
 	public void visit(NegExp elem) {
 		elem.t.accept(this);
+		
+		String left = "";
+		
+		if(elem.t instanceof VariableTerm){
+			left = ((VariableTerm)(elem.t)).pVarName;
+		}else if(elem.t instanceof ConstantTerm){
+			left = ((ConstantTerm)(elem.t)).var_key;
+		}else if(elem.t instanceof ExpTerm){
+			left = ((ExpTerm)(elem.t)).str;
+		}else if(elem.t instanceof EmptyTerm){
+			//TODO: emptyterm
+		}
+
+		
+		elem.str = "( -"+left+" )";
 	}
 
 	@Override
@@ -715,29 +856,26 @@ public class Formula2Promela implements Visitor{
 		elem.t1.accept(this);
 		elem.t2.accept(this);
 		
-		boolean postcond = false;
+		String left = "";
+		String right = "";
 		
-		if (elem.t1 instanceof VariableTerm)
-		{
-			postcond = ((VariableTerm)(elem.t1)).postcond;
-		}
-		else if (elem.t1 instanceof ExpTerm)
-		{
-			postcond = ((ExpTerm)(elem.t1)).postcond;
-		}
-		
-		if (postcond == false)
-		{
-			//precondition
-			elem.strPre = elem.t1.str + " != " + elem.t2.str;
-			
-		}
-		else {
-			//postcondition
-
-
+		if(elem.t1 instanceof VariableTerm) {
+			left = ((VariableTerm)(elem.t1)).pVarName;
+		}else if(elem.t1 instanceof ConstantTerm) {
+			left = ((ConstantTerm)(elem.t1)).var_key;
+		}else if(elem.t1 instanceof ExpTerm) {
+			left = ((ExpTerm)(elem.t1)).str;
 		}
 		
+		if(elem.t2 instanceof VariableTerm) {
+			right = ((VariableTerm)(elem.t2)).pVarName;
+		}else if(elem.t2 instanceof ConstantTerm) {
+			right = ((ConstantTerm)(elem.t2)).var_key;
+		}else if(elem.t2 instanceof ExpTerm) {
+			right = ((ExpTerm)(elem.t2)).str;
+		}
+		
+		elem.strPre = left + "==" + right;
 	}
 
 	@Override
@@ -754,6 +892,8 @@ public class Formula2Promela implements Visitor{
 	public void visit(NinRel elem) {
 		elem.t1.accept(this);
 		elem.t2.accept(this);
+		
+		//TODO:NinRel
 	}
 
 
@@ -785,7 +925,8 @@ public class Formula2Promela implements Visitor{
 			leftPre = ((CpFormula)(elem.f1)).strPre;
 			leftPost = ((CpFormula)(elem.f1)).strPost;
 		}else if(elem.f1 instanceof CpxFormula){
-			//TODO: CpxFormula
+			leftPre = ((CpxFormula)(elem.f1)).strPre;
+			leftPost = ((CpxFormula)(elem.f1)).strPost;
 		}
 		
 		if(elem.f2 instanceof AtFormula){
@@ -795,7 +936,8 @@ public class Formula2Promela implements Visitor{
 			rightPre = ((CpFormula)(elem.f2)).strPre;
 			rightPost = ((CpFormula)(elem.f2)).strPost;
 		}else if(elem.f2 instanceof CpxFormula){
-			//TODO: CpxFormula
+			rightPre = ((CpxFormula)(elem.f2)).strPre;
+			rightPost = ((CpxFormula)(elem.f2)).strPost;
 		}
 		
 		if(("").equals(leftPre))leftPre = "false";
@@ -852,25 +994,34 @@ public class Formula2Promela implements Visitor{
 	public void visit(Terms elem) {
 		elem.t.accept(this);
 		elem.str = "";
-		String tsPlaceName = this.tempPlaceName; //get the related Place type of this braced terms
+		String tsPlaceName = "$"; //get the related Place type of this braced terms
 		elem.placeName = tsPlaceName;
 		String tPlaceVarName;
 		String tConstantKey;
+		String tExpStr;
 		String fieldCount = "1";
 //		elem.str = elem.t.str;
 		if(elem.t instanceof VariableTerm){
 			tPlaceVarName = ((VariableTerm)(elem.t)).pVarName;
 			if(!("").equals(tsPlaceName)){
-				if(((VariableTerm)(elem.t)).isUserVariable){
-					elem.str += "	"+tsPlaceName+"."+tsPlaceName+"_field1 = "
-									+tPlaceVarName+";\n";
-				}
+//				if(((VariableTerm)(elem.t)).isUserVariable){
+//					elem.str += "	"+tsPlaceName+"."+tsPlaceName+"_field1 = "
+//									+tPlaceVarName+";\n";
+//				}
+				elem.str += "	"+tsPlaceName+"."+tsPlaceName+"_field1 = "
+				+tPlaceVarName+";\n";
 			}
 		}else if(elem.t instanceof ConstantTerm){
 			tConstantKey = ((ConstantTerm)(elem.t)).var_key;
 			if(!("").equals(tsPlaceName)){
 				elem.str += "	"+tsPlaceName+"."+tsPlaceName+"_field1 = "
 						+tConstantKey+";\n";
+			}
+		}else if(elem.t instanceof ExpTerm) {
+			tExpStr = ((ExpTerm)(elem.t)).str;
+			if(!("").equals(tsPlaceName)){
+				elem.str += "	"+tsPlaceName+"."+tsPlaceName+"_field1 = "
+						+tExpStr+";\n";
 			}
 		}
 		
@@ -883,11 +1034,14 @@ public class Formula2Promela implements Visitor{
 			if(t instanceof VariableTerm){
 				tPlaceVarName = ((VariableTerm)t).pVarName;
 				if(!("").equals(tsPlaceName)){
-					if(((VariableTerm)t).isUserVariable){
-						 fieldCount = Integer.toString(i+2);
-						elem.str += "	"+tsPlaceName+"."+tsPlaceName+"_field"+fieldCount+" = "
-										+tPlaceVarName+";\n";
-					}
+//					if(((VariableTerm)t).isUserVariable){
+//						 fieldCount = Integer.toString(i+2);
+//						elem.str += "	"+tsPlaceName+"."+tsPlaceName+"_field"+fieldCount+" = "
+//										+tPlaceVarName+";\n";
+//					}
+					
+					fieldCount = Integer.toString(i+2);
+					elem.str += "	"+tsPlaceName+"."+tsPlaceName+"_field"+fieldCount+" = "+tPlaceVarName+";\n";
 				}
 			}else if(t instanceof ConstantTerm){
 				tConstantKey = ((ConstantTerm)t).var_key;
@@ -895,6 +1049,13 @@ public class Formula2Promela implements Visitor{
 					 fieldCount = Integer.toString(i+2);
 					elem.str += "	"+tsPlaceName+"."+tsPlaceName+"_field"+fieldCount+" = "
 							+tConstantKey+";\n";
+				}
+			}else if(t instanceof ExpTerm) {
+				tExpStr = ((ExpTerm)t).str;
+				if(!("").equals(tsPlaceName)){
+					 fieldCount = Integer.toString(i+2);
+					elem.str += "	"+tsPlaceName+"."+tsPlaceName+"_field"+fieldCount+" = "
+							+tExpStr+";\n";
 				}
 			}
 		}
@@ -920,7 +1081,7 @@ public class Formula2Promela implements Visitor{
 				
 				elem.str = ((ExpTerm)(elem.t1)).str;
 				elem.str += ((ExpTerm)(elem.t2)).str;
-				elem.str += "	place_"+t1PlaceName+"!"+t2PlaceName+";\n";
+//				elem.str += "	place_"+t1PlaceName+"!"+t2PlaceName+";\n";
 			}
 		}
 		

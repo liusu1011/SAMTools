@@ -37,20 +37,50 @@ public class PropertyBuilder {
 	 * modified bakery protocal, using places to show the state of customer's ID
 	 * 01/23/2014
 	 */
-	public void set_new_bakery_protocal_mutex() {
-		String placeName0 = "Critical";
-		Place p0  = model.getPlaceByName(placeName0);
-		DataType dt0 = p0.getDataType();
-		Token tok0 = new Token(dt0);
+	public void setMondexProperties() {
+		String placeName = "ConPurse";
+		Place p  = model.getPlaceByName(placeName);
+		DataType dt = p.getDataType();
+		//<arda,50,true,2,arda,bob,50,1,1,idle,none,none,0,1,1>
+		Token tok0 = new Token(dt);
+		tok0.Tlist.add(new BasicType(1, 0,"arda"));		
+		tok0.Tlist.add(new BasicType(0, 150,""));
+		tok0.Tlist.add(new BasicType(1, 0,"true"));
+		tok0.Tlist.add(new BasicType(0, 2,""));
+		tok0.Tlist.add(new BasicType(1, 0,"arda"));
+		tok0.Tlist.add(new BasicType(1, 0,"bob"));
+		tok0.Tlist.add(new BasicType(0, 50,""));
 		tok0.Tlist.add(new BasicType(0, 1,""));
-		this.properties.add(new Property(placeName0, tok0,  Property.RelationType.CONJUNCTION, Property.Operator.EQ));
+		tok0.Tlist.add(new BasicType(0, 1,""));
+		tok0.Tlist.add(new BasicType(1, 0,"idle"));
+		tok0.Tlist.add(new BasicType(1, 0,"none"));
+		tok0.Tlist.add(new BasicType(1, 0,"none"));
+		tok0.Tlist.add(new BasicType(0, 0,""));
+		tok0.Tlist.add(new BasicType(0, 1,""));
+		tok0.Tlist.add(new BasicType(0, 1,""));
+		this.properties.add(new Property(placeName, tok0,  Property.RelationType.CONJUNCTION, Property.Operator.EQ));
 		
-		String placeName1 = "Critical";
-		Place p1  = model.getPlaceByName(placeName1);
-		DataType dt1 = p1.getDataType();
-		Token tok1 = new Token(dt1);
-		tok1.Tlist.add(new BasicType(0, 2,""));
-		this.properties.add(new Property(placeName1, tok1,  Property.RelationType.CONJUNCTION, Property.Operator.EQ));
+		//<bob,250,true,2,bob,arda,50,1,1,idle,none,none,0,1,1>
+//		Token tok1 = new Token(dt);
+//		
+//		tok1.Tlist.add(new BasicType(1, 0,"bob"));		
+//		tok1.Tlist.add(new BasicType(0, 250,""));
+//		tok1.Tlist.add(new BasicType(1, 0,"true"));
+//		tok1.Tlist.add(new BasicType(0, 2,""));
+//		tok1.Tlist.add(new BasicType(1, 0,"bob"));
+//		tok1.Tlist.add(new BasicType(1, 0,"arda"));
+//		tok1.Tlist.add(new BasicType(0, 50,""));
+//		tok1.Tlist.add(new BasicType(0, 1,""));
+//		tok1.Tlist.add(new BasicType(0, 1,""));
+//		tok1.Tlist.add(new BasicType(1, 0,"idle"));
+//		tok1.Tlist.add(new BasicType(1, 0,"none"));
+//		tok1.Tlist.add(new BasicType(1, 0,"none"));
+//		tok1.Tlist.add(new BasicType(0, 0,""));
+//		tok1.Tlist.add(new BasicType(0, 1,""));
+//		tok1.Tlist.add(new BasicType(0, 1,""));
+//		
+//		this.properties.add(new Property(placeName, tok1, Property.RelationType.CONJUNCTION, Property.Operator.EQ));
+
 	}
 	
 
