@@ -136,8 +136,8 @@ public class ElementaryNetComposition {
 	}
 	
 	private void samArcToCompositionModel(){
-		HashMap<String, sam_model.Arc> samArcs = this.samModel.getArcs();
-		for(sam_model.Arc arc : samArcs.values()){
+		HashMap<String, SAMGUI.sam_model.Arc> samArcs = this.samModel.getArcs();
+		for(SAMGUI.sam_model.Arc arc : samArcs.values()){
 			convertSamArcToPNArc(arc);
 		}
 		
@@ -152,8 +152,8 @@ public class ElementaryNetComposition {
 	
 	//recursive iterate hierarchical level of Sam to get all arcs from sub level.
 	private void subCompositionArcsToCompositionModel(Component component){
-		HashMap<String, sam_model.Arc> subArcs = component.subCompositionModel.getArcs();
-		for(sam_model.Arc subArc : subArcs.values()){
+		HashMap<String, SAMGUI.sam_model.Arc> subArcs = component.subCompositionModel.getArcs();
+		for(SAMGUI.sam_model.Arc subArc : subArcs.values()){
 			convertSamArcToPNArc(subArc);
 		}
 		
@@ -172,7 +172,7 @@ public class ElementaryNetComposition {
 	 * 2.add to net composition model;
 	 * @param arc
 	 */
-	private void convertSamArcToPNArc(sam_model.Arc arc){
+	private void convertSamArcToPNArc(SAMGUI.sam_model.Arc arc){
 		SamModelObject start = arc.getStart();
 		SamModelObject end = arc.getEnd();
 		Place tempStartPlace = null;

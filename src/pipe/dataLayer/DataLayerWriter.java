@@ -12,6 +12,7 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
@@ -75,7 +76,7 @@ public class DataLayerWriter {
          pnDOM.appendChild(PNML);
          
          Attr pnmlAttr = pnDOM.createAttribute("xmlns"); // PNML "xmlns" Attribute
-         pnmlAttr.setValue("http://www.informatik.hu-berlin.de/top/pnml/ptNetb");
+//         pnmlAttr.setValue("http://www.informatik.hu-berlin.de/top/pnml/ptNetb");
          PNML.setAttributeNode(pnmlAttr);
          
          Element NET = pnDOM.createElement("net"); // Net Element
@@ -196,7 +197,137 @@ public class DataLayerWriter {
          // e.printStackTrace(System.err);
       }
    }
+   
+   
+   /**
+    * Export the current model's document to upper level component;
+ * @throws TransformerException 
+    * 
+    */
+   public Document exportModel() throws DOMException, TransformerException{
+	   Document pnDOM = null;
+	   Document pnResult = null;
 
+	      StreamSource xsltSource = null;
+	      Transformer transformer = null;
+	      try {
+	         // Build a Petri Net XML Document
+	         DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+	         DocumentBuilder builder = builderFactory.newDocumentBuilder();
+	         pnDOM = builder.newDocument();
+	         
+	         Element PNML = pnDOM.createElement("pnml"); // PNML Top Level Element
+	         pnDOM.appendChild(PNML);
+	         
+	         Attr pnmlAttr = pnDOM.createAttribute("xmlns"); // PNML "xmlns" Attribute
+//	         pnmlAttr.setValue("http://www.informatik.hu-berlin.de/top/pnml/ptNetb");
+	         PNML.setAttributeNode(pnmlAttr);
+	         
+	         Element NET = pnDOM.createElement("net"); // Net Element
+	         PNML.appendChild(NET);
+	         Attr netAttrId = pnDOM.createAttribute("id"); // Net "id" Attribute
+	         netAttrId.setValue("Net-One");
+	         NET.setAttributeNode(netAttrId);
+	         Attr netAttrType = pnDOM.createAttribute("type"); // Net "type" Attribute
+	         netAttrType.setValue("P/T net");
+	         NET.setAttributeNode(netAttrType);
+	         
+	         AnnotationNote[] labels = netModel.getLabels();
+	         for (int i = 0; i < labels.length; i++) {
+	               NET.appendChild(createAnnotationNoteElement(labels[i], pnDOM));
+	         }         
+	         
+	         MarkingParameter[] markingParameters = netModel.getMarkingParameters();
+	         for (int i = 0; i < markingParameters.length; i++) {
+	            NET.appendChild(createDefinition(markingParameters[i], pnDOM));
+	         }        
+	         
+	         RateParameter[] rateParameters = netModel.getRateParameters();
+	         for (int i = 0; i < rateParameters.length; i++) {
+	            NET.appendChild(createDefinition(rateParameters[i], pnDOM));
+	         }            
+	         
+	         Place[] places = netModel.getPlaces();
+	         for (int i = 0 ; i < places.length ; i++) {
+	            NET.appendChild(createPlaceElement(places[i], pnDOM));
+	         }
+
+	         Transition[] transitions = netModel.getTransitions();
+	         for (int i = 0 ; i < transitions.length ; i++) {
+	            NET.appendChild(createTransitionElement(transitions[i], pnDOM));
+	         }
+
+	         Arc[] arcs = netModel.getArcs();
+	         for (int i = 0 ; i < arcs.length ; i++) {
+	            Element newArc = createArcElement(arcs[i],pnDOM);
+	            
+	            int arcPoints = arcs[i].getArcPath().getArcPathDetails().length;
+	            String[][] point = arcs[i].getArcPath().getArcPathDetails();
+	            for (int j = 0; j < arcPoints; j++) {
+	               newArc.appendChild(createArcPoint(point[j][0],point[j][1],point[j][2],pnDOM,j));
+	            }
+	            NET.appendChild(newArc);
+	            //newArc = null;
+	         }
+	         
+	         InhibitorArc[] inhibitorArcs = netModel.getInhibitors();
+	         for (int i = 0; i < inhibitorArcs.length; i++) {
+	            Element newArc = createArcElement(inhibitorArcs[i],pnDOM);
+
+	            int arcPoints = inhibitorArcs[i].getArcPath().getArcPathDetails().length;
+	            String[][] point = inhibitorArcs[i].getArcPath().getArcPathDetails();
+	            for (int j = 0; j < arcPoints; j++) {
+	               newArc.appendChild(createArcPoint(point[j][0],
+	                        point[j][1],
+	                        point[j][2],
+	                        pnDOM,j));
+	            }
+	            NET.appendChild(newArc);
+	         }
+	         
+	         StateGroup[] stateGroups = netModel.getStateGroups();
+	         for(int i = 0; i< stateGroups.length; i++) {
+	            Element newStateGroup = createStateGroupElement(stateGroups[i], pnDOM);
+	            
+	            int numConditions = stateGroups[i].numElements();
+	            String[] conditions = stateGroups[i].getConditions();
+	            for(int j = 0; j<numConditions; j++) {
+	               newStateGroup.appendChild(createCondition(conditions[j], pnDOM));
+	            }
+	            NET.appendChild(newStateGroup);
+	         }
+	         //stateGroups = null;         
+	   
+	         pnDOM.normalize();
+	         xsltSource = new StreamSource(Thread.currentThread().
+	                 getContextClassLoader().getResourceAsStream("xslt" + 
+	                 System.getProperty("file.separator") + "GeneratePNML.xsl"));
+
+	         transformer = TransformerFactory.newInstance().newTransformer(xsltSource);
+	         // Write file and do XSLT transformation to generate correct PNML
+//	         File outputObjectArrayList = file;//new File(filename); // Output for XSLT Transformation
+	         DOMSource source = new DOMSource(pnDOM);
+	         
+	         DocumentBuilder builder2 = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+	         pnResult = builder2.newDocument();
+	         DOMResult result = new DOMResult(pnResult);
+//	         StreamResult result = new StreamResult(outputObjectArrayList);
+	         transformer.transform(source, result);
+	      } catch (ParserConfigurationException e) {
+	         // System.out.println("=====================================================================================");
+	         System.out.println("ParserConfigurationException thrown in savePNML() " );
+	         // System.out.println("=====================================================================================");
+	         // e.printStackTrace(System.err);
+	      } catch (DOMException e) {
+	         // System.out.println("=====================================================================");
+	         System.out.println("DOMException thrown in savePNML() ");
+	         // System.out.println("=====================================================================");
+	         // e.printStackTrace(System.err);
+	      }          
+	         
+	   return pnResult;
+   }
+   
    
    /**
     * Creates a Place Element for a PNML Petri-Net DOM

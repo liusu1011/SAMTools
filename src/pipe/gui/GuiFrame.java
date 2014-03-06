@@ -40,6 +40,11 @@ import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+
+import org.w3c.dom.DOMException;
 
 import analysis.ModelCompletenessCheck;
 import pipe.dataLayer.DataLayer;
@@ -124,6 +129,8 @@ public class GuiFrame
    
    private CopyPasteManager copyPasteManager;
    
+   //the current uppper level component
+   public SAMGUI.sam_model.Component curComponent;
    
    public GuiFrame(String title) {
       // HAK-arrange for frameTitle to be initialized and the default file name
@@ -649,8 +656,10 @@ public class GuiFrame
    
    // set tabbed pane properties and add change listener that updates tab with
    // linked model and view
-   public void setTab(){
+   public void setTab(SAMGUI.sam_model.Component curComp){
       
+	   this.curComponent = curComp;
+	   
       appTab = CreateGui.getTab();
       appTab.addChangeListener(new ChangeListener() {
          
@@ -714,6 +723,20 @@ public class GuiFrame
       }
    }
    
+   public void saveOperation_elemNet(boolean forceSaveAs) throws DOMException, TransformerException{
+	   if (appView == null) {
+	         return;
+	      }
+	   
+	   DataLayerWriter saveModel = new DataLayerWriter(appModel);
+	   this.curComponent.setElemSpec(saveModel.exportModel());
+	   this.curComponent.setElemNetModel(appModel);
+ 
+	   appView.setNetChanged(false);
+	   appView.getUndoManager().clear();
+       undoAction.setEnabled(false);
+       redoAction.setEnabled(false);
+   }
    
    public void saveOperation(boolean forceSaveAs){
       
@@ -844,6 +867,40 @@ public class GuiFrame
       selectAction.actionPerformed(null);
    }
    
+   public void loadElemSpecTab(SAMGUI.sam_model.Component curComp) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException{
+	   int freeSpace = CreateGui.getFreeSpace();
+	      String name = curComp.getName();
+	      setTitle(name);// Change the program caption
+//	      appTab.setTitleAt(freeSpace, name);
+	      
+	      setObjects(freeSpace);
+	      
+	      appModel.addObserver((Observer)appView); // Add the view as Observer
+	      appModel.addObserver((Observer)appGui);  // Add the app window as observer
+
+	      PNMLTransformer transformer = new PNMLTransformer();
+	    	  appModel.createFromPNML(transformer.transformPNML(curComp.getElemSpecModel())
+	    			  );
+	    	  appView.scrollRectToVisible(new Rectangle(0,0,1,1));
+	    	  
+	    	  appView.setNetChanged(false);   // Status is unchanged
+		      
+		      JScrollPane scroller = new JScrollPane(appView);
+		      // make it less bad on XP
+		      scroller.setBorder(new BevelBorder(BevelBorder.LOWERED));
+		      appTab.addTab(name,null,scroller,null);
+		      appTab.setSelectedIndex(freeSpace);
+		      
+		      appView.updatePreferredSize();
+		      //appView.add( new ViewExpansionComponent(appView.getWidth(),
+		      //        appView.getHeight());
+		      
+		      
+		      
+		      selectAction.actionPerformed(null);
+	          
+   }
+   
    
    /**Loads an Experiment XML file and shows a suitable message in case of error.
     * @param path the absolute path to the experiment file.
@@ -884,8 +941,10 @@ public class GuiFrame
     * If current net has modifications, asks if you want to save and does it if
     * you want.
     * @return true if handled, false if cancelled
+ * @throws TransformerException 
+ * @throws DOMException 
     */
-   private boolean checkForSave() {
+   private boolean checkForSave() throws DOMException, TransformerException {
       
       if (appView.getNetChanged()) {
          int result=JOptionPane.showConfirmDialog(GuiFrame.this,
@@ -895,7 +954,8 @@ public class GuiFrame
                  JOptionPane.WARNING_MESSAGE);
          switch(result) {
             case JOptionPane.YES_OPTION:
-               saveOperation(false);
+//               saveOperation(false);
+            	saveOperation_elemNet(false);
                break;
             case JOptionPane.CLOSED_OPTION:
             case JOptionPane.CANCEL_OPTION:
@@ -910,8 +970,10 @@ public class GuiFrame
     * If current net has modifications, asks if you want to save and does it if
     * you want.
     * @return true if handled, false if cancelled
+ * @throws TransformerException 
+ * @throws DOMException 
     */
-   private boolean checkForSaveAll(){
+   private boolean checkForSaveAll() throws DOMException, TransformerException{
       // Loop through all tabs and check if they have been saved
       for (int counter = 0; counter < appTab.getTabCount(); counter++) {
          appTab.setSelectedIndex(counter);
@@ -1499,7 +1561,16 @@ public class GuiFrame
       
       public void actionPerformed(ActionEvent e) {
          if (this == saveAction) {
-            saveOperation(false);            	  // code for Save operation
+//            saveOperation(false);            	  // code for Save operation
+        	 try {
+				saveOperation_elemNet(false);
+			} catch (DOMException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (TransformerException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
          } else if(this == saveAsAction) {
             saveOperation(true);                  // code for Save As operations
          } else if (this == openAction) {         // code for Open operation
@@ -1519,23 +1590,34 @@ public class GuiFrame
             }
          } else if (this == createAction) {
             createNewTab(null, false);            // Create a new tab
-         } else if ((this == exitAction) && checkForSaveAll()) {
-            dispose();
-            System.exit(0);
-         } else if ((this == closeAction) && (appTab.getTabCount() > 0)
-         && checkForSave()) {
-            setObjectsNull(appTab.getSelectedIndex());
-            appTab.remove(appTab.getSelectedIndex());
-         } else if (this == exportPNGAction) {
-            Export.exportGuiView(appView, Export.PNG, null);
-         } else if (this == exportPSAction) {
-            Export.exportGuiView(appView, Export.POSTSCRIPT, null);
-         } else if (this == exportTNAction){
-            System.out.println("Exportant a TN");
-            Export.exportGuiView(appView, Export.TN, appModel);
-         } else if (this == printAction) {
-            Export.exportGuiView(appView, Export.PRINTER, null);
-         }
+         } else
+			try {
+				if ((this == exitAction) && checkForSaveAll()) {
+				    dispose();
+				    setObjectsNull(appTab.getSelectedIndex());
+				    appTab.remove(appTab.getSelectedIndex());
+//            System.exit(0);
+				 } else if ((this == closeAction) && (appTab.getTabCount() > 0)
+				 && checkForSave()) {
+				    setObjectsNull(appTab.getSelectedIndex());
+				    appTab.remove(appTab.getSelectedIndex());
+				 } else if (this == exportPNGAction) {
+				    Export.exportGuiView(appView, Export.PNG, null);
+				 } else if (this == exportPSAction) {
+				    Export.exportGuiView(appView, Export.POSTSCRIPT, null);
+				 } else if (this == exportTNAction){
+				    System.out.println("Exportant a TN");
+				    Export.exportGuiView(appView, Export.TN, appModel);
+				 } else if (this == printAction) {
+				    Export.exportGuiView(appView, Export.PRINTER, null);
+				 }
+			} catch (DOMException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (TransformerException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
       }
       
    }
