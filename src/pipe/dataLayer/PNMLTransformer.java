@@ -7,8 +7,10 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
@@ -99,6 +101,29 @@ public class PNMLTransformer {
       //}	    
    }
 
+   public Document transformPNML(Document pnDOM) throws TransformerConfigurationException{
+	   File outfile = new File("TempNet.xml");
+	   outfile.deleteOnExit();
+	   Document document = null;
+	   
+	   TransformerFactory transformerFactory = TransformerFactory.newInstance();
+       Transformer transformer = transformerFactory.newTransformer();
+	   DOMSource source = new DOMSource(pnDOM);
+	   StreamResult result =  new StreamResult(outfile);
+	   try {
+			transformer.transform(source, result);
+		} catch (TransformerException e) {
+			e.printStackTrace();
+		}
+		
+		document = transformPNML(outfile.getPath());
+		
+		
+		
+		outfile.delete();
+//	      System.out.println(document.getDocumentElement().getChildNodes().item(1).getNodeName());
+	   return document;     
+   }
    
    /**
     * Return a DOM for the PNML file at URI pnmlFileName

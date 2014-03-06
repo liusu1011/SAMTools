@@ -3,13 +3,18 @@ package pipe.gui;
 import java.io.File;
 import java.util.ArrayList;
          
+
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTree;
 import javax.swing.border.EmptyBorder;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactoryConfigurationError;
 
 import pipe.dataLayer.DataLayer;
+import SAMGUI.sam_model.Component;
 
 
 public class CreateGui {
@@ -38,55 +43,50 @@ public class CreateGui {
    private static JScrollPane scroller;
 
    
-   public static void init() {
-	   imgPath = "Images" + System.getProperty("file.separator");
-//      imgPath = System.getProperty("File.separator")+"Images" + System.getProperty("file.separator");
-      
-      // make the initial dir for browsing be My Documents (win), ~ (*nix), etc
-      userPath = null; 
-      
-      appGui = new GuiFrame("PIPE2: Platform Independent Petri Net Editor " +
-              "2.5rc5");
-      
-      Grid.enableGrid();
-      
-      appTab = new JTabbedPane();
-      
-      animator = new Animator();
-      appGui.setTab();   // sets Tab properties
-           
-      // create the tree
-//      ModuleManager moduleManager = new ModuleManager();
-//      JTree moduleTree = moduleManager.getModuleTree();
-      
-//      leftPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,null,moduleTree);
-//      leftPane.setContinuousLayout(true);
-//      leftPane.setDividerSize(0);
-      
-      try {
-          animBox = new AnimationHistory("Animation history\n");
-          animBox.setEditable(false);
-          
-          scroller = new JScrollPane(animBox);
-       } catch (javax.swing.text.BadLocationException be) {
-          be.printStackTrace();
-       }
-      
-      pane = 
-              new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,scroller,appTab);
+   public static void init(Component curComponent) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException {
+	      
+	      imgPath = "Images" + System.getProperty("file.separator");
+	      
+	      // make the initial dir for browsing be My Documents (win), ~ (*nix), etc
+	      userPath = null; 
+	      
+	      appGui = new GuiFrame("PIPE2: Platform Independent Petri Net Editor " +
+	              "2.5rc5");
+	      
+	      Grid.enableGrid();
+	      
+	      appTab = new JTabbedPane();
+	      
+	      animator = new Animator();
+	      appGui.setTab(curComponent);   // sets Tab properties
+	           
+	      // create the tree
+	      ModuleManager moduleManager = new ModuleManager();
+	      JTree moduleTree = moduleManager.getModuleTree();
+	      
+	      leftPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,moduleTree,null);
+	      leftPane.setContinuousLayout(true);
+	      leftPane.setDividerSize(0);
+	      
+	      JSplitPane pane = 
+	              new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,leftPane,appTab);
 
-      pane.setContinuousLayout(true);
-      pane.setOneTouchExpandable(true);
-      pane.setBorder(null); // avoid multiple borders
-      pane.setDividerSize(8);
+	      pane.setContinuousLayout(true);
+	      pane.setOneTouchExpandable(true);
+	      pane.setBorder(null); // avoid multiple borders
+	      pane.setDividerSize(8);
 
-      appGui.getContentPane().add(pane);
-          
-      appGui.createNewTab(null,false);
-      
-      appGui.setVisible(true);
-      appGui.init();
-   }
+	      appGui.getContentPane().add(pane);
+	      
+	      if(!curComponent.isSetElemNetSpec){
+	    	  appGui.createNewTab(null,false);
+	      }else{
+	    	  appGui.loadElemSpecTab(curComponent);
+	      }
+	      
+	      appGui.setVisible(true);
+	      appGui.init();
+	   }
    
    
    public static GuiFrame getApp() {  //returns a reference to the application
