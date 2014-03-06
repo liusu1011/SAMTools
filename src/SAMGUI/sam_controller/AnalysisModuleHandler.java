@@ -23,7 +23,7 @@ import SAMGUI.sam_controller.ResultsTxtPane;
 import SAMGUI.sam_controller.EscapableDialog;
 import SAMGUI.sam_model.SamModel;
 import SAMGUI.sam_model.analysis.ElementaryNetComposition;
-import SAMGUI.sam_model.analysis.myPromela;
+import analysis.myPromela;
 import SAMGUI.sam_view.SamFrame;
 
 public class AnalysisModuleHandler extends AbstractAction {

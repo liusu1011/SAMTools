@@ -168,7 +168,7 @@ public class SamFrame extends JFrame {
 		JMenuItem  createMenuItem = new JMenuItem("New");
 		createMenuItem.setName("new");
 		createMenuItem.setIcon(new ImageIcon(SamFrame.class
-				.getResource("/sam_view/resources/createDoc16.png")));
+				.getResource("/SAMGUI/sam_view/resources/createDoc16.png")));
 		createMenuItem.setMnemonic(KeyEvent.VK_N);
 		createMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
 		        ActionEvent.ALT_MASK));
@@ -178,7 +178,7 @@ public class SamFrame extends JFrame {
 		JMenuItem  saveMenuItem = new JMenuItem("Save");
 		saveMenuItem.setName("save");
 		saveMenuItem.setIcon(new ImageIcon(SamFrame.class
-				.getResource("/sam_view/resources/fileSave16.png")));
+				.getResource("/SAMGUI/sam_view/resources/fileSave16.png")));
 		saveMenuItem.setMnemonic(KeyEvent.VK_S);
 		saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
 		        ActionEvent.ALT_MASK));
@@ -188,7 +188,7 @@ public class SamFrame extends JFrame {
 		JMenuItem  saveAsMenuItem = new JMenuItem("Save As");
 		saveAsMenuItem.setName("saveas");
 		saveAsMenuItem.setIcon(new ImageIcon(SamFrame.class
-				.getResource("/sam_view/resources/fileSave16.png")));
+				.getResource("/SAMGUI/sam_view/resources/fileSave16.png")));
 		saveAsMenuItem.setMnemonic(KeyEvent.VK_S);
 		saveAsMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
 		        ActionEvent.ALT_MASK));
@@ -198,7 +198,7 @@ public class SamFrame extends JFrame {
 		JMenuItem  openMenuItem = new JMenuItem("Open");
 		openMenuItem.setName("open");
 		openMenuItem.setIcon(new ImageIcon(SamFrame.class
-				.getResource("/sam_view/resources/fileOpen16.png")));
+				.getResource("/SAMGUI/sam_view/resources/fileOpen16.png")));
 		openMenuItem.setMnemonic(KeyEvent.VK_O);
 		openMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
 		        ActionEvent.ALT_MASK));
@@ -208,7 +208,7 @@ public class SamFrame extends JFrame {
 		JMenuItem  closeMenuItem = new JMenuItem("Close");
 		closeMenuItem.setName("close");
 		closeMenuItem.setIcon(new ImageIcon(SamFrame.class
-				.getResource("/sam_view/resources/closeDoc16.png")));
+				.getResource("/SAMGUI/sam_view/resources/closeDoc16.png")));
 		closeMenuItem.setMnemonic(KeyEvent.VK_C);
 		closeMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,
 		        ActionEvent.ALT_MASK));
@@ -224,7 +224,7 @@ public class SamFrame extends JFrame {
 		JMenuItem  copyMenuItem = new JMenuItem("Copy");
 		copyMenuItem.setName("copy");
 		copyMenuItem.setIcon(new ImageIcon(SamFrame.class
-				.getResource("/sam_view/resources/copy16.png")));
+				.getResource("/SAMGUI/sam_view/resources/copy16.png")));
 		copyMenuItem.setMnemonic(KeyEvent.VK_C);
 		copyMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,
 		        ActionEvent.ALT_MASK));
@@ -233,7 +233,7 @@ public class SamFrame extends JFrame {
 		JMenuItem  pasteMenuItem = new JMenuItem("Paste");
 		pasteMenuItem.setName("paste");
 		pasteMenuItem.setIcon(new ImageIcon(SamFrame.class
-				.getResource("/sam_view/resources/paint16.png")));
+				.getResource("/SAMGUI/sam_view/resources/paint16.png")));
 		pasteMenuItem.setMnemonic(KeyEvent.VK_P);
 		pasteMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
 		        ActionEvent.ALT_MASK));
@@ -242,7 +242,7 @@ public class SamFrame extends JFrame {
 		JMenuItem  undoMenuItem = new JMenuItem("Undo");
 		undoMenuItem.setName("undo");
 		undoMenuItem.setIcon(new ImageIcon(SamFrame.class
-				.getResource("/sam_view/resources/undo16.png")));
+				.getResource("/SAMGUI/sam_view/resources/undo16.png")));
 		undoMenuItem.setMnemonic(KeyEvent.VK_U);
 		undoMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U,
 		        ActionEvent.ALT_MASK));
@@ -251,7 +251,7 @@ public class SamFrame extends JFrame {
 		JMenuItem  redoMenuItem = new JMenuItem("Redo");
 		redoMenuItem.setName("redo");
 		redoMenuItem.setIcon(new ImageIcon(SamFrame.class
-				.getResource("/sam_view/resources/redo16.png")));
+				.getResource("/SAMGUI/sam_view/resources/redo16.png")));
 		redoMenuItem.setMnemonic(KeyEvent.VK_R);
 		redoMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R,
 		        ActionEvent.ALT_MASK));
@@ -265,7 +265,7 @@ public class SamFrame extends JFrame {
 		JMenuItem  componentMenuItem = new JMenuItem("Component");
 		componentMenuItem.setName("component");
 		componentMenuItem.setIcon(new ImageIcon(SamFrame.class
-				.getResource("/sam_view/resources/component16.png")));
+				.getResource("/SAMGUI/sam_view/resources/component16.png")));
 		componentMenuItem.setMnemonic(KeyEvent.VK_C);
 		componentMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,
 		        ActionEvent.ALT_MASK));
@@ -274,7 +274,7 @@ public class SamFrame extends JFrame {
 		JMenuItem  connectorMenuItem = new JMenuItem("Connector");
 		connectorMenuItem.setName("connector");
 		connectorMenuItem.setIcon(new ImageIcon(SamFrame.class
-				.getResource("/sam_view/resources/connector16.png")));
+				.getResource("/SAMGUI/sam_view/resources/connector16.png")));
 		connectorMenuItem.setMnemonic(KeyEvent.VK_C);
 		connectorMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,
 		        ActionEvent.ALT_MASK));
@@ -283,7 +283,7 @@ public class SamFrame extends JFrame {
 		JMenuItem  arcMenuItem = new JMenuItem("Arc");
 		arcMenuItem.setName("arc");
 		arcMenuItem.setIcon(new ImageIcon(SamFrame.class
-				.getResource("/sam_view/resources/arc16.png")));
+				.getResource("/SAMGUI/sam_view/resources/arc16.png")));
 		arcMenuItem.setMnemonic(KeyEvent.VK_A);
 		arcMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A,
 		        ActionEvent.ALT_MASK));
@@ -292,7 +292,7 @@ public class SamFrame extends JFrame {
 		JMenuItem  portMenuItem = new JMenuItem("Port");
 		portMenuItem.setName("port");
 		portMenuItem.setIcon(new ImageIcon(SamFrame.class
-				.getResource("/sam_view/resources/port16.png")));
+				.getResource("/SAMGUI/sam_view/resources/port16.png")));
 		portMenuItem.setMnemonic(KeyEvent.VK_P);
 		portMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
 		        ActionEvent.ALT_MASK));
@@ -335,7 +335,7 @@ public class SamFrame extends JFrame {
 		
 		btnCreateFile = new JButton("");
 		btnCreateFile.setIcon(new ImageIcon(SamFrame.class
-				.getResource("/sam_view/resources/createDoc16.png")));
+				.getResource("/SAMGUI/sam_view/resources/createDoc16.png")));
 		btnCreateFile.setBackground(SystemColor.menu);
 		toolBarFile.add(btnCreateFile);
 		btnCreateFile.setToolTipText("Create New File");
@@ -344,7 +344,7 @@ public class SamFrame extends JFrame {
 
 		btnCloseFile = new JButton("");
 		btnCloseFile.setIcon(new ImageIcon(SamFrame.class
-				.getResource("/sam_view/resources/closeDoc16.png")));
+				.getResource("/SAMGUI/sam_view/resources/closeDoc16.png")));
 		btnCloseFile.setBackground(SystemColor.menu);
 		toolBarFile.add(btnCloseFile);
 		btnCloseFile.setToolTipText("Close File");
@@ -353,7 +353,7 @@ public class SamFrame extends JFrame {
 
 		btnOpenFile = new JButton("");
 		btnOpenFile.setIcon(new ImageIcon(SamFrame.class
-				.getResource("/sam_view/resources/fileOpen16.png")));
+				.getResource("/SAMGUI/sam_view/resources/fileOpen16.png")));
 		btnOpenFile.setBackground(SystemColor.menu);
 		toolBarFile.add(btnOpenFile);
 		btnOpenFile.setToolTipText("Open File");
@@ -362,7 +362,7 @@ public class SamFrame extends JFrame {
 
 		btnSaveFile = new JButton("");
 		btnSaveFile.setIcon(new ImageIcon(SamFrame.class
-				.getResource("/sam_view/resources/fileSave16.png")));
+				.getResource("/SAMGUI/sam_view/resources/fileSave16.png")));
 		btnSaveFile.setBackground(SystemColor.menu);
 		toolBarFile.add(btnSaveFile);
 		btnSaveFile.setToolTipText("Save File");
@@ -380,7 +380,7 @@ public class SamFrame extends JFrame {
 
 		btnCopy = new JButton("");
 		btnCopy.setIcon(new ImageIcon(SamFrame.class
-				.getResource("/sam_view/resources/copy16.png")));
+				.getResource("/SAMGUI/sam_view/resources/copy16.png")));
 		toolBarEdit.add(btnCopy);
 		btnCopy.setToolTipText("Copy");
 		btnCopy.setName("btnCopy");
@@ -389,7 +389,7 @@ public class SamFrame extends JFrame {
 
 		btnPaste = new JButton("");
 		btnPaste.setIcon(new ImageIcon(SamFrame.class
-				.getResource("/sam_view/resources/paint16.png")));
+				.getResource("/SAMGUI/sam_view/resources/paint16.png")));
 		toolBarEdit.add(btnPaste);
 		btnPaste.setBackground(SystemColor.menu);
 		btnPaste.setToolTipText("Paste");
@@ -398,7 +398,7 @@ public class SamFrame extends JFrame {
 
 		btnUndo = new JButton("");
 		btnUndo.setIcon(new ImageIcon(SamFrame.class
-				.getResource("/sam_view/resources/undo16.png")));
+				.getResource("/SAMGUI/sam_view/resources/undo16.png")));
 		btnUndo.setBackground(SystemColor.menu);
 		toolBarEdit.add(btnUndo);
 		btnUndo.setToolTipText("Undo");
@@ -407,7 +407,7 @@ public class SamFrame extends JFrame {
 
 		btnRedo = new JButton("");
 		btnRedo.setIcon(new ImageIcon(SamFrame.class
-				.getResource("/sam_view/resources/redo16.png")));
+				.getResource("/SAMGUI/sam_view/resources/redo16.png")));
 		btnRedo.setBackground(SystemColor.menu);
 		toolBarEdit.add(btnRedo);
 		btnRedo.setToolTipText("Redo");
@@ -426,7 +426,7 @@ public class SamFrame extends JFrame {
 		JButton btnZoomIn = new JButton("");
 		toolBarView.add(btnZoomIn);
 		btnZoomIn.setIcon(new ImageIcon(SamFrame.class
-				.getResource("/sam_view/resources/zoom16.png")));
+				.getResource("/SAMGUI/sam_view/resources/zoom16.png")));
 		btnZoomIn.setToolTipText("Zoom In");
 		btnZoomIn.setBackground(SystemColor.menu);
 		btnZoomIn.setName("btnZoomIn");
@@ -435,7 +435,7 @@ public class SamFrame extends JFrame {
 		JButton btnZoomOut = new JButton("");
 		toolBarView.add(btnZoomOut);
 		btnZoomOut.setIcon(new ImageIcon(SamFrame.class
-				.getResource("/sam_view/resources/zoomOut16.png")));
+				.getResource("/SAMGUI/sam_view/resources/zoomOut16.png")));
 		btnZoomOut.setBackground(SystemColor.menu);
 		btnZoomOut.setToolTipText("Zoom Out");
 		btnZoomOut.setName("btnZoomOut");
@@ -456,7 +456,7 @@ public class SamFrame extends JFrame {
 		btnComponent.addActionListener(btnHandler);
 		btnComponent.setBackground(UIManager.getColor("Button.background"));
 		btnComponent.setIcon(new ImageIcon(SamFrame.class
-				.getResource("/sam_view/resources/component16.png")));
+				.getResource("/SAMGUI/sam_view/resources/component16.png")));
 		btnComponent.setToolTipText("Add New Component");
 		btnComponent.setName("btnComponent");
 		// btnComponent.setEnabled(false);
@@ -465,7 +465,7 @@ public class SamFrame extends JFrame {
 		toolBarModel.add(btnConnector);
 		btnConnector.addActionListener(btnHandler);
 		btnConnector.setIcon(new ImageIcon(SamFrame.class
-				.getResource("/sam_view/resources/connector16.png")));
+				.getResource("/SAMGUI/sam_view/resources/connector16.png")));
 		btnConnector.setBackground(UIManager.getColor("Button.background"));
 		btnConnector.setToolTipText("Add New Connector");
 		btnConnector.setName("btnConnector");
@@ -476,7 +476,7 @@ public class SamFrame extends JFrame {
 		btnArc.addActionListener(btnHandler);
 		btnArc.setBackground(UIManager.getColor("Button.background"));
 		btnArc.setIcon(new ImageIcon(SamFrame.class
-				.getResource("/sam_view/resources/arc16.png")));
+				.getResource("/SAMGUI/sam_view/resources/arc16.png")));
 		btnArc.setToolTipText("Add New Arc");
 		btnArc.setName("btnArc");
 		// btnArc.setEnabled(false);
@@ -486,7 +486,7 @@ public class SamFrame extends JFrame {
 		btnPort.addActionListener(btnHandler);
 		btnPort.setBackground(UIManager.getColor("Button.background"));
 		btnPort.setIcon(new ImageIcon(SamFrame.class
-				.getResource("/sam_view/resources/port16.png")));
+				.getResource("/SAMGUI/sam_view/resources/port16.png")));
 		btnPort.setToolTipText("Add New Port");
 		btnPort.setName("btnPort");
 		// btnPort.setEnabled(false);
@@ -504,7 +504,7 @@ public class SamFrame extends JFrame {
 		btnModelToPromela = new JButton("");
 //		Dimension buttonSize = new Dimension(20,20);
 //		btnModelToPromela.setMaximumSize(buttonSize);
-		btnModelToPromela.setIcon(new ImageIcon(SamFrame.class.getResource("/sam_view/resources/anchor.png")));
+		btnModelToPromela.setIcon(new ImageIcon(SamFrame.class.getResource("/SAMGUI/sam_view/resources/anchor.png")));
 		btnModelToPromela.setBackground(SystemColor.menu);
 		toolBarAnalysis.add(btnModelToPromela);
 		toolBarAnalysis.setToolTipText("Convert Elementary Level Petri Net to Promela");
