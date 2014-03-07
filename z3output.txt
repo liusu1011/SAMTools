@@ -1,34 +1,101 @@
-unsat
+sat
+S1y -> (DT0SORT 1797)
+PS0_P2_tok0 -> (DT0SORT 6)
+S1p -> (DT0SORT 2283)
+S0x -> (DT0SORT (- 1))
+S1 -> (State as-array[k!0] as-array[k!0] as-array[k!0])
+PS2_P2_tok0 -> (DT0SORT 6)
+S0 -> (State as-array[k!0] as-array[k!0] as-array[k!0])
+S0p -> (DT0SORT 8855)
+PS1_P2_tok0 -> (DT0SORT 6)
+S1x -> (DT0SORT 1796)
+S2 -> (State as-array[k!0] as-array[k!0] as-array[k!0])
+S0y -> (DT0SORT 0)
+S0z -> (DT0SORT 2437)
+S1z -> (DT0SORT 2282)
+k!0 -> {
+  (DT0SORT 6) -> false
+  (DT0SORT (- 1)) -> false
+  (DT0SORT 1796) -> false
+  else -> false
+}
+k!8 -> {
+  (DT0SORT 6) -> false
+  (DT0SORT (- 1)) -> false
+  (DT0SORT 2283) -> true
+  (DT0SORT 1796) -> false
+  else -> false
+}
+k!5 -> {
+  (DT0SORT 6) -> false
+  (DT0SORT (- 1)) -> false
+  (DT0SORT 1796) -> false
+  else -> false
+}
+k!2 -> {
+  (DT0SORT 6) -> false
+  (DT0SORT 0) -> true
+  (DT0SORT (- 1)) -> false
+  (DT0SORT 1796) -> false
+  else -> false
+}
+k!7 -> {
+  (DT0SORT 6) -> false
+  (DT0SORT 2282) -> false
+  (DT0SORT (- 1)) -> false
+  (DT0SORT 1796) -> false
+  else -> false
+}
+k!4 -> {
+  (DT0SORT 6) -> false
+  (DT0SORT (- 1)) -> false
+  (DT0SORT 8855) -> true
+  (DT0SORT 1796) -> false
+  else -> false
+}
+k!1 -> {
+  (DT0SORT 6) -> false
+  (DT0SORT (- 1)) -> false
+  (DT0SORT 1796) -> false
+  else -> false
+}
+k!6 -> {
+  (DT0SORT 6) -> false
+  (DT0SORT (- 1)) -> false
+  (DT0SORT 1797) -> true
+  (DT0SORT 1796) -> false
+  else -> false
+}
+k!3 -> {
+  (DT0SORT 6) -> false
+  (DT0SORT 2437) -> false
+  (DT0SORT (- 1)) -> false
+  (DT0SORT 1796) -> false
+  else -> false
+}
+
 
 Result:
-add rows:                186317
-added eqs:               7460001
-arith conflicts:         112
-array ax1:               238
-array ax2:               291982
-array def const:         3
-array ext ax:            1471
-array sel const:         2277
-assert diseq:            472181
-assert lower:            802701
-assert upper:            740942
-binary propagations:     8678124
-bound prop:              5264
-conflicts:               99631
-datatype accessor ax:    258
-datatype constructor ax: 258
-decisions:               3689257
-del clause:              500617
-dyn ack:                 40
-eq adapter:              1697
-fixed eqs:               251434
-minimized lits:          811604
-mk clause:               523220
+added eqs:               106
+array ax1:               8
+array ax2:               1
+array def const:         1
+array sel const:         8
+assert lower:            4
+assert upper:            4
+binary propagations:     89
+conflicts:               6
+datatype accessor ax:    14
+datatype constructor ax: 14
+datatype occurs check:   10
+decisions:               36
+del clause:              15
+eq adapter:              4
+final checks:            1
+mk clause:               58
 num checks:              1
-offset eqs:              302749
-pivots:                  13069
-propagations:            19821037
-restarts:                370
-max. heap size:     9.27012 Mbytes
+pivots:                  3
+propagations:            133
+max. heap size:     0.506128 Mbytes
 
 END OF Result

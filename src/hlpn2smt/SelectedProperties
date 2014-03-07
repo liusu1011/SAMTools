@@ -1,3 +1,57 @@
+
+
+
+
+/**
+March 5th 2014
+*/
+	public void setMondexProperties() {
+		String placeName = "ConPurse";
+		Place p  = model.getPlaceByName(placeName);
+		DataType dt = p.getDataType();
+		//<arda,50,true,2,arda,bob,50,1,1,idle,none,none,0,1,1>
+		Token tok0 = new Token(dt);
+		tok0.Tlist.add(new BasicType(1, 0,"arda"));		
+		tok0.Tlist.add(new BasicType(0, 150,""));
+		tok0.Tlist.add(new BasicType(1, 0,"true"));
+		tok0.Tlist.add(new BasicType(0, 2,""));
+		tok0.Tlist.add(new BasicType(1, 0,"arda"));
+		tok0.Tlist.add(new BasicType(1, 0,"bob"));
+		tok0.Tlist.add(new BasicType(0, 50,""));
+		tok0.Tlist.add(new BasicType(0, 1,""));
+		tok0.Tlist.add(new BasicType(0, 1,""));
+		tok0.Tlist.add(new BasicType(1, 0,"idle"));
+		tok0.Tlist.add(new BasicType(1, 0,"none"));
+		tok0.Tlist.add(new BasicType(1, 0,"none"));
+		tok0.Tlist.add(new BasicType(0, 0,""));
+		tok0.Tlist.add(new BasicType(0, 1,""));
+		tok0.Tlist.add(new BasicType(0, 1,""));
+		this.properties.add(new Property(placeName, tok0,  Property.RelationType.CONJUNCTION, Property.Operator.EQ));
+		
+		//<bob,250,true,2,bob,arda,50,1,1,idle,none,none,0,1,1>
+//		Token tok1 = new Token(dt);
+//		
+//		tok1.Tlist.add(new BasicType(1, 0,"bob"));		
+//		tok1.Tlist.add(new BasicType(0, 250,""));
+//		tok1.Tlist.add(new BasicType(1, 0,"true"));
+//		tok1.Tlist.add(new BasicType(0, 2,""));
+//		tok1.Tlist.add(new BasicType(1, 0,"bob"));
+//		tok1.Tlist.add(new BasicType(1, 0,"arda"));
+//		tok1.Tlist.add(new BasicType(0, 50,""));
+//		tok1.Tlist.add(new BasicType(0, 1,""));
+//		tok1.Tlist.add(new BasicType(0, 1,""));
+//		tok1.Tlist.add(new BasicType(1, 0,"idle"));
+//		tok1.Tlist.add(new BasicType(1, 0,"none"));
+//		tok1.Tlist.add(new BasicType(1, 0,"none"));
+//		tok1.Tlist.add(new BasicType(0, 0,""));
+//		tok1.Tlist.add(new BasicType(0, 1,""));
+//		tok1.Tlist.add(new BasicType(0, 1,""));
+//		
+//		this.properties.add(new Property(placeName, tok1, Property.RelationType.CONJUNCTION, Property.Operator.EQ));
+
+	}
+
+
 	/**
 	 * set 2-bakery protocol property (old)
 	 */

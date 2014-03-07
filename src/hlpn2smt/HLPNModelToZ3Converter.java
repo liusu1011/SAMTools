@@ -102,7 +102,7 @@ public class HLPNModelToZ3Converter {
 		z3str.append(buildStates());			
 		z3str.append(iniStates());
 		z3str.append(buildTransitions());
-		pb.setMondexProperties();
+		pb.set_andTypeOrigin();
 		z3str.append(pb.buildProperties());
 		z3str.append("\n}\n");
 		return z3str.toString();
