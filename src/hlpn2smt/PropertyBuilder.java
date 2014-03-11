@@ -34,7 +34,7 @@ public class PropertyBuilder {
 	}	
 	
 	public void set_andTypeOrigin() {
-		String placeName0 = "P2";
+		String placeName0 = "P4";
 		Place p0  = model.getPlaceByName(placeName0);
 		DataType dt0 = p0.getDataType();
 		Token tok0 = new Token(dt0);
