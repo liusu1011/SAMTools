@@ -43,7 +43,7 @@ public class CreateGui {
 //      imgPath = System.getProperty("File.separator")+"Images" + System.getProperty("file.separator");
       
       // make the initial dir for browsing be My Documents (win), ~ (*nix), etc
-      userPath = null; 
+      userPath = "./"; 
       
       appGui = new GuiFrame("PIPE2: Platform Independent Petri Net Editor " +
               "2.5rc5");
