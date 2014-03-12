@@ -2,6 +2,7 @@ package pipe.gui.handler;
 
 import hlpn2smt.HLPNModelToZ3Converter;
 import hlpn2smt.Property;
+import hlpn2smt.RefineZ3Converter;
 
 import java.awt.Container;
 import java.awt.event.ActionEvent;
@@ -66,7 +67,7 @@ public class BoundedModelCheckingModule extends AbstractAction {
 	      contentPane.add(new ButtonBar("Z3 Run Check", checkButtonClick,
 	              guiDialog.getRootPane()));
 	      
-	      contentPane.add(new ButtonBar("Cancel", cancelButtonClick, 
+	      contentPane.add(new ButtonBar("Z3 Run Refined Check", refCheckButtonClick, 
 	    		  guiDialog.getRootPane()));
 	      
 	      
@@ -117,9 +118,30 @@ public class BoundedModelCheckingModule extends AbstractAction {
 	   /**
 	    * Verify button click handler
 	    */
-	   ActionListener cancelButtonClick = new ActionListener(){
+	   ActionListener refCheckButtonClick = new ActionListener(){
 		   public void actionPerformed(ActionEvent e){
-			   
+		    	  BufferedWriter bufferedWriter = null;
+				  BufferedReader bufferedReader = null;
+				  String r = "";
+		    	  DataLayer sourceDataLayer = CreateGui.getModel();
+		    	  String steps = new String(steptext.getText());
+		  	    if(steps.equals("")){
+		  	    	steptext.setText("pre defined step must be specified before checking !");
+		  	    	return;
+		  	    }
+		  	    ArrayList<Property> propertyList = new ArrayList<Property>();
+
+		    	RefineZ3Converter convert = new RefineZ3Converter(sourceDataLayer, Integer.parseInt(steps), propertyList);
+		    	try {
+		    		bufferedReader = new BufferedReader(new FileReader("z3output.txt"));
+					   String t;
+					   while((t=bufferedReader.readLine())!=null){
+						   r += t +"\n";
+					   }
+					   results.setText(r);
+		    	}catch(IOException ioe){
+					   ioe.printStackTrace();
+				} 		   
 		   }
 	   };
 	

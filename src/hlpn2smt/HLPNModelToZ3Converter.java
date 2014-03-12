@@ -62,7 +62,7 @@ public class HLPNModelToZ3Converter {
 		
 		//property building initiation
 		pb = new PropertyBuilder(model, properties, placeNameIdMap, placeNameSortMap, stringConstantMap);
-		
+		pb.set_andTypeOrigin();
 		//convert and save
 //		saveToFile(convert(depth));
 		completeChecking();
@@ -102,7 +102,7 @@ public class HLPNModelToZ3Converter {
 		z3str.append(buildStates());			
 		z3str.append(iniStates());
 		z3str.append(buildTransitions());
-		pb.set_andTypeOrigin();
+//		pb.set_andTypeOrigin();
 		z3str.append(pb.buildProperties());
 		z3str.append("\n}\n");
 		return z3str.toString();
@@ -270,7 +270,7 @@ public class HLPNModelToZ3Converter {
 	}
 	
 	
-	private String declaration(){
+	protected String declaration(){
 		StringBuilder z3decl = new StringBuilder();
 		String logstr = "LOG_MSG(\"Test a high level Petri net, unrolled transitions\");\n" +
 		"printf(\"Test a high level Petri net, unrolled transitions\");"+nextline;
@@ -308,7 +308,7 @@ public class HLPNModelToZ3Converter {
 		return z3decl.toString();
 	}
 	
-	private String buildStates(){
+	protected String buildStates(){
 		StringBuilder states = new StringBuilder();
 		states.append("//build all depth number of states"+nextline);
 		for(int i=0;i<=depth;i++){//build depth+1 states
@@ -375,7 +375,7 @@ public class HLPNModelToZ3Converter {
 		return ini.toString();
 	}
 	
-	private String iniStates(){
+	protected String iniStates(){
 		StringBuilder ini = new StringBuilder();
 		//for each place, if it has a token, build an empty set, add all tokens to the set, then assign to state 0;
 		int psize = places.length;
@@ -428,7 +428,7 @@ public class HLPNModelToZ3Converter {
 		return ini.toString();
 	}
 	
-	private String buildTransitions(){
+	protected String buildTransitions(){
 		StringBuilder z3transitions = new StringBuilder();
 		z3transitions.append("//transitions"+nextline);
 		//build depth number of transitions
@@ -445,7 +445,7 @@ public class HLPNModelToZ3Converter {
 		return z3transitions.toString();
 	}
 	
-	private String oneBigTrans(int currentStateID){
+	protected String oneBigTrans(int currentStateID){
 		StringBuilder trans = new StringBuilder();
 		Transition[] transitions = model.getTransitions();
 		int tsize = transitions.length+1;//the extra 1 is used for adding a dump transition
@@ -473,7 +473,7 @@ public class HLPNModelToZ3Converter {
 		return trans.toString();
 	}	
 	
-	private String oneTrans(int currentStateID, int currTransID){
+	protected String oneTrans(int currentStateID, int currTransID){
 		StringBuilder oneTrans = new StringBuilder();
 		Transition t = model.getTransition(currTransID);
 		String transitionName = t.getName();
@@ -555,6 +555,7 @@ public class HLPNModelToZ3Converter {
 				this.placeNameIdMap, this.placeNameSortMap, this.stringConstantMap);
 		s.accept(f2z);
 		transPreConds.add(s.z3str);
+		System.out.println(s.z3str);
 		
 		//extra variables are generated from uservariables when quantifier presents.
 		for(String extraVars:f2z.z3GetExtraVars()){
@@ -670,7 +671,7 @@ public class HLPNModelToZ3Converter {
 	/**
 	 * buildLoopFreePath is by adding constraints that non of the state is equal
 	 */
-	private String buildLoopFreePath() {
+	protected String buildLoopFreePath() {
 		StringBuilder loopFree = new StringBuilder();
 		loopFree.append(nextline+"//loopFree path construction"+nextline);
 		loopFree.append("Z3_ast loopFree_and["+(depth+1)+"];"+nextline);
@@ -713,7 +714,7 @@ public class HLPNModelToZ3Converter {
 	 * @param p
 	 * @return
 	 */
-	private String mkPlaceSort(Vector<String> types, int index){
+	protected String mkPlaceSort(Vector<String> types, int index){
 		int dtSize = types.size();
 		StringBuilder z3sort = new StringBuilder();
 		z3sort.append("Z3_func_decl "+"DT"+index+"_mk_tuple_decl;"+nextline);
@@ -741,7 +742,7 @@ public class HLPNModelToZ3Converter {
 	 * @param right
 	 * @return
 	 */
-	private String mk_eq(String left, String right){
+	protected String mk_eq(String left, String right){
 		return "Z3_mk_eq(ctx, "+left+", "+right+")";
 	}
 	
@@ -751,7 +752,7 @@ public class HLPNModelToZ3Converter {
 	 * @param andList
 	 * @return
 	 */
-	private String mk_and(int andSize, String andList){
+	protected String mk_and(int andSize, String andList){
 		return "Z3_mk_and(ctx, "+andSize+", "+andList+")";
 	}
 	/**
@@ -760,7 +761,7 @@ public class HLPNModelToZ3Converter {
 	 * @param elem
 	 * @return
 	 */
-	private String set_add(String set, String elem){
+	protected String set_add(String set, String elem){
 		return "Z3_mk_set_add(ctx, "+set+", "+elem+")";
 	}
 	/**
@@ -769,7 +770,7 @@ public class HLPNModelToZ3Converter {
 	 * @param elem
 	 * @return
 	 */
-	private String set_del(String set, String elem){
+	protected String set_del(String set, String elem){
 		return "Z3_mk_set_del(ctx, "+set+", "+elem+")";
 	}
 	/**
@@ -778,11 +779,11 @@ public class HLPNModelToZ3Converter {
 	 * @param elem
 	 * @return
 	 */
-	private String set_member(String set, String elem){
+	protected String set_member(String set, String elem){
 		return "Z3_mk_set_member(ctx, "+elem+", "+set+")";
 	}
 	
-	private String getSortByPlaceName(String pname){
+	protected String getSortByPlaceName(String pname){
 		return "DT"+this.placeNameSortMap.get(pname)+"SORT";
 	}
 }

@@ -159,6 +159,10 @@ public class Transition
    protected ArrayList<Place> placeOutList = new ArrayList<Place>();
 
    protected SymbolTable symTable = new SymbolTable();
+   /**
+    * stroes transition's pre conditions and post conditions in Z3 api form
+    */
+   protected ArrayList<String> z3TransConds = new ArrayList<String>();
 
    
    
@@ -1259,6 +1263,13 @@ public class Transition
 	   return dependentTrans;
    }
    
+   public ArrayList<String> getZ3TransConds(){
+	   return this.z3TransConds;
+   }
    
+   public boolean addZ3TransConds(String cond){
+	   return this.z3TransConds.add(cond);
+   }
+ 
    
 }
