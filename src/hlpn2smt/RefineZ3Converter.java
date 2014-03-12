@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Vector;
 import java.util.regex.Matcher;
@@ -31,9 +32,13 @@ import pipe.dataLayer.Token;
 import pipe.dataLayer.Transition;
 
 public class RefineZ3Converter extends HLPNModelToZ3Converter{
+	HashSet<String> initialMarkingPlaceSet; //stores place ID instead of name
+	HashSet<String> propertyPlaceSet; //stores place ID instead of name
 		
 	public RefineZ3Converter(DataLayer _model, int _depth, ArrayList<Property> _prop) {
 		super(_model, _depth, _prop);
+		initialMarkingPlaceSet = findInitialMarkingPlaceSet();
+		propertyPlaceSet = findPropertyPlaceSet();
 	}
 	
 	public String convert(int depth){
@@ -49,6 +54,14 @@ public class RefineZ3Converter extends HLPNModelToZ3Converter{
 		z3str.append("\n}\n");
 		return z3str.toString();
 	} 
+	
+	/**
+	 * find initial places 
+	 */
+	
+	/**
+	 * start from initial places and BFS the net
+	 */
 	
 	protected String buildTransitions(){
 		StringBuilder z3transitions = new StringBuilder();
@@ -67,6 +80,9 @@ public class RefineZ3Converter extends HLPNModelToZ3Converter{
 		return z3transitions.toString();
 	}
 	
+	/**
+	 * refined one using BFS start from the initial marking places
+	 */
 	protected String oneBigTrans(int currentStateID){
 		StringBuilder trans = new StringBuilder();
 		Transition[] transitions = model.getTransitions();
@@ -198,4 +214,24 @@ public class RefineZ3Converter extends HLPNModelToZ3Converter{
 		return oneTrans.toString();
 	}
 	
+	protected HashSet<String> findInitialMarkingPlaceSet() {
+		HashSet<String> set = new HashSet<String>();
+		for(Place p: model.getPlaces()) {
+			if(p.getToken().getTokenCount() != 0) {
+				set.add(p.getId());
+			}
+		}
+		
+		return set;
+	}
+	
+	protected HashSet<String> findPropertyPlaceSet() {
+		HashSet<String> set = new HashSet<String>();
+		for(Property p: properties) {
+			String pname = p.placeName;
+			set.add(pname);
+		}
+		
+		return set;
+	}
 }
