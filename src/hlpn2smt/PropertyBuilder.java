@@ -43,6 +43,39 @@ public class PropertyBuilder {
 		
 	}
 	
+	public void set_SharedMemory_5_p_sm_2() {
+		String placeName0 = "Ext_Mem_Acc";
+		Place p0  = model.getPlaceByName(placeName0);
+		DataType dt0 = p0.getDataType();
+		Token tok0 = new Token(dt0);
+		tok0.Tlist.add(new BasicType(0, 1,""));
+		tok0.Tlist.add(new BasicType(0, 5,""));
+		this.properties.add(new Property(placeName0, tok0,  Property.RelationType.CONJUNCTION, Property.Operator.EQ));
+		
+		String placeName1 = "Memory";
+		Place p1  = model.getPlaceByName(placeName1);
+		DataType dt1 = p1.getDataType();
+		Token tok1 = new Token(dt1);
+		tok1.Tlist.add(new BasicType(0, 4,""));
+		this.properties.add(new Property(placeName1, tok1,  Property.RelationType.CONJUNCTION, Property.Operator.EQ));
+	}
+	
+//	public void set_SharedMemory_5_p_sm_2() {
+//		String placeName0 = "Ext_Mem_Acc";
+//		Place p0  = model.getPlaceByName(placeName0);
+//		DataType dt0 = p0.getDataType();
+//		Token tok0 = new Token(dt0);
+//		tok0.Tlist.add(new BasicType(0, 1,""));
+//		tok0.Tlist.add(new BasicType(0, 5,""));
+//		this.properties.add(new Property(placeName0, tok0,  Property.RelationType.CONJUNCTION, Property.Operator.EQ));
+//		
+//		String placeName1 = "Memory";
+//		Place p1  = model.getPlaceByName(placeName1);
+//		DataType dt1 = p1.getDataType();
+//		Token tok1 = new Token(dt1);
+//		tok1.Tlist.add(new BasicType(0, 4,""));
+//		this.properties.add(new Property(placeName1, tok1,  Property.RelationType.CONJUNCTION, Property.Operator.NEQ));
+//	}
 
 	/**
 	 * this build properties function is for reachability problem whether a  specified token will appear in a place or not at any state.

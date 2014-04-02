@@ -101,6 +101,7 @@ public class BoundedModelCheckingModule extends AbstractAction {
 	  	    }
 	  	    ArrayList<Property> propertyList = new ArrayList<Property>();
 	    	HLPNModelToZ3Converter convert = new HLPNModelToZ3Converter(sourceDataLayer, Integer.parseInt(steps), propertyList);
+	    	convert.completeChecking();
 	    	try {
 	    		bufferedReader = new BufferedReader(new FileReader("z3output.txt"));
 				   String t;
@@ -132,6 +133,7 @@ public class BoundedModelCheckingModule extends AbstractAction {
 		  	    ArrayList<Property> propertyList = new ArrayList<Property>();
 
 		    	RefineZ3Converter convert = new RefineZ3Converter(sourceDataLayer, Integer.parseInt(steps), propertyList);
+		    	convert.completeChecking();
 		    	try {
 		    		bufferedReader = new BufferedReader(new FileReader("z3output.txt"));
 					   String t;

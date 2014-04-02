@@ -74,5 +74,6 @@ public class Z3Dialog extends JDialog{
 	    }
 		ArrayList<Property> propertyList = new ArrayList<Property>();
     	HLPNModelToZ3Converter convert = new HLPNModelToZ3Converter(appModel, Integer.parseInt(steps), propertyList);
+    	convert.completeChecking();
 	}
 }

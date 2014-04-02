@@ -62,10 +62,10 @@ public class HLPNModelToZ3Converter {
 		
 		//property building initiation
 		pb = new PropertyBuilder(model, properties, placeNameIdMap, placeNameSortMap, stringConstantMap);
-		pb.set_andTypeOrigin();
+		pb.set_SharedMemory_5_p_sm_2();
 		//convert and save
 //		saveToFile(convert(depth));
-		completeChecking();
+//		completeChecking();
 //		refineOutputs("z3output.txt");
 	}
 	/**

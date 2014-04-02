@@ -92,7 +92,9 @@ public class Place
             (new BasicStroke(Pipe.PLACE_TRANSITION_PROXIMITY_RADIUS)).createStrokedShape(place);
 
    private MarkingParameter markingParameter = null;
-   
+
+   protected ArrayList<Arc> arcInList = new ArrayList<Arc>();
+   protected ArrayList<Transition> transInList = new ArrayList<Transition>();
    protected ArrayList<Arc> arcOutList = new ArrayList<Arc>();
    protected ArrayList<Transition> transOutList = new ArrayList<Transition>();
    
@@ -447,11 +449,19 @@ public class Place
    public boolean hasCapacity(){
       return capacity > 0;
    }
+ 
+   public LinkedList<Arc> getArcInList(){
+	   return (LinkedList<Arc>) super.connectTo;
+   }
    
    public LinkedList<Arc> getArcOutList(){
 	   return (LinkedList<Arc>) super.connectFrom;
    }
    
+   /**
+    * get output transitions of the current place
+    * @return
+    */
    public ArrayList<Transition> getTransOutList(){
 	   this.transOutList.clear();
 	   this.arcOutList.clear();
@@ -467,6 +477,27 @@ public class Place
 	   }
 
 	   return transOutList;
+   }
+   
+   /**
+    * get input transitions of the current place
+    * @return
+    */
+   public ArrayList<Transition> getTransInList(){
+	   this.transInList.clear();
+	   this.arcInList.clear();
+	   
+	   for(Arc arc : getArcInList()){
+		   this.arcInList.add(arc);
+	   }
+	   
+	   Iterator<Arc> arcIterator = arcInList.iterator();
+	   while(arcIterator.hasNext()){
+		   Arc thisArc = arcIterator.next();
+		   transInList.add((Transition)thisArc.getSource());
+	   }
+
+	   return transInList;
    }
 
    public void addedToGui(){
