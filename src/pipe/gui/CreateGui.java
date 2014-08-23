@@ -45,7 +45,8 @@ public class CreateGui {
    
    public static void init(Component curComponent) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException {
 	      
-	      imgPath = "Images" + System.getProperty("file.separator");
+//	      imgPath = "Images" + System.getProperty("file.separator");
+	   imgPath = "Images/";
 	      
 	      // make the initial dir for browsing be My Documents (win), ~ (*nix), etc
 	      userPath = null; 

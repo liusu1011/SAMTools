@@ -130,7 +130,7 @@ public class SamFrame extends JFrame {
 	// sets up toolbars and menus
 	private SamFrame() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("SAM Framework Modeling Tool");
+		setTitle("SAMTOOLS - SOFTWARE ARCHITECTURE MODELING AND ANALYSIS IN SAM");
 		this.setName("frameSAMMain");
 		this.setMinimumSize(new Dimension(600, 400));
 		this.setSize(800, 600);

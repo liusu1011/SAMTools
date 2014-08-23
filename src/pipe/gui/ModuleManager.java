@@ -161,9 +161,13 @@ public class ModuleManager {
       Vector names = new Vector(); 
       Vector classes = new Vector();
 
+//      URL modulesDirURL = Thread.currentThread().getContextClassLoader().
+//              getResource("pipe" + System.getProperty("file.separator") +
+//              "modules" + System.getProperty("file.separator"));
+      
       URL modulesDirURL = Thread.currentThread().getContextClassLoader().
-              getResource("pipe" + System.getProperty("file.separator") +
-              "modules" + System.getProperty("file.separator"));
+              getResource("pipe" + "/" +
+              "modules" + "/");
          
       if (JarUtilities.isJarFile(modulesDirURL)) {
          try {

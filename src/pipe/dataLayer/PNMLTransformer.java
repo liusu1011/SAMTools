@@ -49,12 +49,12 @@ public class PNMLTransformer {
       File outputObjectArrayList = null;
       Document document = null;
       
-
+      
       try {
          // Create Transformer with XSL Source File
          StreamSource xsltSource = new StreamSource(
                  Thread.currentThread().getContextClassLoader().getResourceAsStream(
-                 "xslt" + System.getProperty("file.separator")
+                 "xslt" + "/"
                  + "GenerateObjectList.xsl"));
          Transformer transformer = TransformerFactory.newInstance().newTransformer(xsltSource);
          
