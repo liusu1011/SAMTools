@@ -5,6 +5,7 @@ import hlpn2smt.Property;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -23,7 +24,9 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
@@ -38,6 +41,10 @@ public class BoundedModelCheckingModule extends AbstractAction {
 	
 	JButton btn;
 	private static final String MODULE_NAME = "Bounded Model Checking";
+	private EscapableDialog guiDialog;
+	private JPanel leftPanel;
+	private JPanel rightPanel;
+	
 	private ResultsTxtPane results;
 	private JTextField steptext;
 	private JLabel PreDefineSteps;
@@ -69,26 +76,28 @@ public class BoundedModelCheckingModule extends AbstractAction {
 		}
 		
 	}
-	public void boundedModelCheckingWindow() {
-		 // Build interface
-		EscapableDialog guiDialog = 
-	              new EscapableDialog(CreateGui.appGui, MODULE_NAME, true);
-		   // 1 Set layout
-	      Container contentPane = guiDialog.getContentPane();
-	      contentPane.setLayout(new BoxLayout(contentPane,BoxLayout.PAGE_AXIS));
-
-	      
-	      // 3 Add results pane
-	      contentPane.add(results = new ResultsTxtPane(null)); //SUTODO: the null parameter in ResultsTxtPane to be reconsider.
-	      
-	      // add property
-	      contentPane.add(PropertySpec = new JLabel("Property Spec: "));
-	      contentPane.add(PropertyName = new JLabel("Property Name: "));
-	      contentPane.add(this.PropertyNameText = new JTextField());
-	      contentPane.add(PropertyToken = new JLabel("Property Token: "));
-	      contentPane.add(this.PropertyTokenText = new JTextField());
-	      contentPane.add(PropertyRelationType = new JLabel("Property RelationType: "));
-	      String[] relationTypeStrings = { "CONJUNCTION", "DISJUNCTION" };
+	
+	public void buildLeftPanel(){
+		leftPanel = new JPanel();
+		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.PAGE_AXIS));	
+	    //Add results textField
+		leftPanel.add(new JLabel("Checking Result"));
+		results = new ResultsTxtPane("Checking Results Shown Here: ");
+		JScrollPane scrollPane = new JScrollPane(results);
+		leftPanel.add(scrollPane); //SUTODO: the null parameter in ResultsTxtPane to be reconsider.
+	}
+	
+	public void buildRightPanel(){
+		rightPanel = new JPanel();
+		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.PAGE_AXIS));	
+		// add property
+		rightPanel.add(PropertySpec = new JLabel("Property Spec: "));
+		rightPanel.add(PropertyName = new JLabel("Property Name: "));
+		rightPanel.add(this.PropertyNameText = new JTextField());
+		rightPanel.add(PropertyToken = new JLabel("Property Token: "));
+		rightPanel.add(this.PropertyTokenText = new JTextField());
+		rightPanel.add(PropertyRelationType = new JLabel("Property RelationType: "));
+	    String[] relationTypeStrings = { "CONJUNCTION", "DISJUNCTION" };
 	      relationTypeComboBox = new JComboBox(relationTypeStrings);
 	      relationTypeComboBox.setSelectedIndex(0);
 	      //listen to combobox relation type
@@ -99,9 +108,9 @@ public class BoundedModelCheckingModule extends AbstractAction {
 				relationTypeString = (String)cb.getSelectedItem();
 			}
 	      });
-	      contentPane.add(relationTypeComboBox);
+	      rightPanel.add(relationTypeComboBox);
 
-	      contentPane.add(PropertyOperator = new JLabel("Property Operator: "));
+	      rightPanel.add(PropertyOperator = new JLabel("Property Operator: "));
 	      String[] operatorStrings = { "EQ", "NEQ" };
 	      operatorComboBox = new JComboBox(operatorStrings);
 	      operatorComboBox.setSelectedIndex(0);
@@ -113,14 +122,13 @@ public class BoundedModelCheckingModule extends AbstractAction {
 				operatorTypeString = (String)opCB.getSelectedItem();
 			}
 	      });
-	      contentPane.add(operatorComboBox);
+	      rightPanel.add(operatorComboBox);
 	      
-	      contentPane.add(new ButtonBar("Add Property", new ActionListener(){
+	      rightPanel.add(new ButtonBar("Add Property", new ActionListener(){
 	    	  public void actionPerformed(ActionEvent e){
 	    		  //add the property name to JList
 	    	  }
-	      },
-	              guiDialog.getRootPane()));
+	      }, guiDialog.getRootPane()));
 	      
 	      this.propertyListStrings = new DefaultListModel<String>();//init as null, but need to init with previous defined property
 	      this.propertyList = new JList(propertyListStrings);
@@ -129,27 +137,52 @@ public class BoundedModelCheckingModule extends AbstractAction {
 	      propertyList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION );
 	      JScrollPane scrollPropertyListPane = new JScrollPane();
 	      scrollPropertyListPane.getViewport().add(propertyList);
-	      contentPane.add(new JLabel("Defined Properties"));
-	      contentPane.add(scrollPropertyListPane);
+	      rightPanel.add(new JLabel("Defined Properties"));
+	      rightPanel.add(scrollPropertyListPane);
 	      
 	      //add  formula textbox
-	      contentPane.add(PreDefineSteps = new JLabel("Pre Define Checking Steps:"));
-	      contentPane.add(steptext = new JTextField(CreateGui.getModel().getPropertyFormula()));
+	      rightPanel.add(PreDefineSteps = new JLabel("Pre Define Checking Steps:"));
+	      rightPanel.add(steptext = new JTextField(CreateGui.getModel().getPropertyFormula()));
 	      
 	      // 4 Add z3 check button
-	      contentPane.add(new ButtonBar("Z3 Run Check", checkButtonClick,
+	      rightPanel.add(new ButtonBar("Z3 Run Check", checkButtonClick,
 	              guiDialog.getRootPane()));
+	}
+	
+	
+	public void boundedModelCheckingWindow() {
+		 // Build interface
+		guiDialog = new EscapableDialog(CreateGui.appGui, MODULE_NAME, true);
+		JPanel mainPanel = new JPanel();
+		guiDialog.getContentPane().add(mainPanel);
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
+		buildLeftPanel();
+		buildRightPanel();
+		
+		   // 1 Set layout
+//	      Container contentPane = guiDialog.getContentPane();
+//		JScrollPane resultScrollPane = new JScrollPane();
+//		JScrollPane controlScrollPane = new JScrollPane();
+		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+				leftPanel, rightPanel);
+		splitPane.setOneTouchExpandable(true);
+		splitPane.setDividerLocation(0.5);
+		
+		//Provide minimum sizes for the two components in the split pane
+		Dimension minimumSize = new Dimension(100, 100);
+		leftPanel.setMinimumSize(minimumSize);
+		rightPanel.setMinimumSize(minimumSize);
 	      
-//	      contentPane.add(new ButtonBar("Cancel", cancelButtonClick, 
-//	    		  guiDialog.getRootPane()));
-	      	      
+//		controlScrollPane.setLayout(new BoxLayout(controlScrollPane,BoxLayout.PAGE_AXIS));
+		
+		mainPanel.add(splitPane);	      	      
 	      
-	      // 5 Make window fit contents' preferred size
+	      // Make window fit contents' preferred size
 	      guiDialog.pack();
 	      
-	      // 6 Move window to the middle of the screen
+	      // Move window to the middle of the screen
 	      guiDialog.setLocationRelativeTo(null);
-	      
+	      mainPanel.setVisible(true);
 	      guiDialog.setVisible(true);
 	}
 	
