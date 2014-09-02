@@ -61,6 +61,23 @@ void throw_z3_error(Z3_context c, Z3_error_code e)
 }
 
 /**
+   \brief Display a symbol in the given output stream.
+*/
+void display_symbol(Z3_context c, FILE * out, Z3_symbol s)
+{
+    switch (Z3_get_symbol_kind(c, s)) {
+    case Z3_INT_SYMBOL:
+        fprintf(out, "#%d", Z3_get_symbol_int(c, s));
+        break;
+    case Z3_STRING_SYMBOL:
+        fprintf(out, "%s", Z3_get_symbol_string(c, s));
+        break;
+    default:
+        unreachable();
+    }
+}
+
+/**
    \brief Display the given type.
 */
 void display_sort(Z3_context c, FILE * out, Z3_sort ty)
@@ -116,22 +133,6 @@ void display_sort(Z3_context c, FILE * out, Z3_sort ty)
     }
 }
 
-/**
-   \brief Display a symbol in the given output stream.
-*/
-void display_symbol(Z3_context c, FILE * out, Z3_symbol s)
-{
-    switch (Z3_get_symbol_kind(c, s)) {
-    case Z3_INT_SYMBOL:
-        fprintf(out, "#%d", Z3_get_symbol_int(c, s));
-        break;
-    case Z3_STRING_SYMBOL:
-        fprintf(out, "%s", Z3_get_symbol_string(c, s));
-        break;
-    default:
-        unreachable();
-    }
-}
 
 /**
    \brief Create a logical context.
@@ -303,27 +304,35 @@ Z3_ast mk_tuple_update(Z3_context c, Z3_ast t, unsigned i, Z3_ast new_val)
 void check(Z3_context ctx, Z3_lbool expected_result)
 {
     Z3_model m      = 0;
+    clock_t start = clock();
     Z3_lbool result = Z3_check_and_get_model(ctx, &m);
-	FILE *fp = fopen("z3output.txt", "w");
+	double time = ((double)clock()-start)/CLOCKS_PER_SEC;
+	FILE *fpn = fopen("z3Result.txt", "w");
+	
     printf("\nThe checking result is:%i\n", result);
     switch (result) {
     case Z3_L_FALSE:
         printf("unsat\n");
-        fprintf(fp, "unsat\n");
+        fprintf(fpn, "unsat\n");
         break;
     case Z3_L_UNDEF:
         printf("unknown\n");
         printf("potential model:\n%s\n", Z3_model_to_string(ctx, m));
-        fprintf(fp, "unknown potential model:\n%s\n", Z3_model_to_string(ctx, m));
-        fclose(fp);
+        fprintf(fpn, "unknown potential model:\n%s\n", Z3_model_to_string(ctx, m));
         break;
     case Z3_L_TRUE:
         printf("sat\n%s\n", Z3_model_to_string(ctx, m));
-        fprintf(fp, "sat\n%s\n", Z3_model_to_string(ctx, m));
+        fprintf(fpn, "sat\n");
+        FILE *fp = fopen("z3output.txt", "w");
+        fprintf(fp, "%s\n", Z3_model_to_string(ctx, m));
+        fclose(fp);
         break;
     }
-    fprintf(fp, "\nResult:\n%s\nEND OF Result\n", Z3_statistics_to_string(ctx));
-    fclose(fp);
+    
+    fprintf(fpn, "\nResult:\n%s\n", Z3_statistics_to_string(ctx));
+	fprintf(fpn, "\nTime Elapse: %f\n", time);
+    fclose(fpn);
+    
     if (m) {
 //    	printf("\ndelete model.");
         Z3_del_model(ctx, m);
@@ -569,14 +578,11 @@ int main() {
 //           Z3_set_param_value(cfg, "AUTO_CONFIG", "false");
 //           Z3_set_param_value(cfg, "MBQI", "false");
            ctx = mk_context_custom(cfg, error_handler);
-		clock_t start = clock();
+		
            /**checker function name**/(ctx);
 
     check(ctx, Z3_L_TRUE);
-	printf("Time elapsed: %f\n", ((double)clock()-start)/CLOCKS_PER_SEC);
-
-    printf("\nResult:\n%s\nEND OF Result\n", Z3_statistics_to_string(ctx));
-//    printf("\nCONTEXT:\n%s\nEND OF CONTEXT\n", Z3_context_to_string(ctx));
+	
     /* delete logical context */
      Z3_del_context(ctx);
      Z3_del_config(cfg);

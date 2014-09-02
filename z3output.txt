@@ -1,34 +1,366 @@
-unsat
+Philosophers_Thinking_tok2 -> (DT0SORT 2)
+Chopsticks_tok4 -> (DT0SORT 4)
+S2p -> (DT0SORT 2)
+PS4_Eating_tok0 -> (DT0SORT 2)
+S2e -> (DT0SORT 2)
+S2Chopsticksr -> (DT0SORT 3)
+S3p -> (DT0SORT 4)
+S3Chopsticksl -> (DT0SORT 4)
+PS0_Eating_tok0 -> (DT0SORT 2)
+S0 -> (State (_ as-array k!4) (_ as-array k!4) (_ as-array k!8))
+Philosophers_Thinking_tok4 -> (DT0SORT 4)
+S3 -> (State (_ as-array k!29) (_ as-array k!28) (_ as-array k!27))
+Chopsticks_tok1 -> (DT0SORT 1)
+S0p -> (DT0SORT 4)
+temp_56 -> (DT0SORT 7579)
+S0C -> (_ as-array k!5)
+PS0_Eating_tok1 -> (DT0SORT 4)
+PS4_Eating_tok1 -> (DT0SORT 4)
+S3rp -> (DT0SORT 14)
+S0Chopsticksl -> (DT0SORT 7)
+S3RC -> (_ as-array k!39)
+S0e -> (DT0SORT 4)
+S1e -> (DT0SORT (- 8583))
+PS3_Eating_tok1 -> (DT0SORT 4)
+S1e1 -> (DT0SORT 4)
+S2C -> (_ as-array k!4)
+Chopsticks_tok2 -> (DT0SORT 2)
+PS3_Eating_tok0 -> (DT0SORT 2)
+S2 -> (State (_ as-array k!4) (_ as-array k!4) (_ as-array k!8))
+S3C1 -> (_ as-array k!36)
+S0RC -> (_ as-array k!11)
+S1Chopsticksr -> (DT0SORT 3)
+temp_55 -> (DT0SORT 1)
+Chopsticks_tok0 -> (DT0SORT 0)
+S1Chopsticksl -> (DT0SORT 10)
+S1RC -> (_ as-array k!21)
+Philosophers_Thinking_tok3 -> (DT0SORT 3)
+PS1_Eating_tok0 -> (DT0SORT 2)
+S0e1 -> (DT0SORT (- 8583))
+S1C -> (_ as-array k!16)
+S3e1 -> (DT0SORT 3509)
+temp_53 -> (DT0SORT 2282)
+S0Chopsticksr -> (DT0SORT 6338)
+S1rp -> (DT0SORT 4)
+S3e -> (DT0SORT 4)
+S4 -> (State (_ as-array k!38) (_ as-array k!36) (_ as-array k!37))
+S3Chopsticksr -> (DT0SORT 0)
+Philosophers_Thinking_tok1 -> (DT0SORT 1)
+PS2_Eating_tok1 -> (DT0SORT 4)
+S0rp -> (DT0SORT 9)
+S1p -> (DT0SORT (- 1))
+S2C1 -> (_ as-array k!28)
+S1 -> (State (_ as-array k!4) (_ as-array k!4) (_ as-array k!8))
+S3C -> (_ as-array k!28)
+temp_54 -> (DT0SORT 0)
+PS1_Eating_tok1 -> (DT0SORT 4)
+Philosophers_Thinking_tok0 -> (DT0SORT 0)
+S2rp -> (DT0SORT (- 8583))
+Chopsticks_tok3 -> (DT0SORT 3)
+S2Chopsticksl -> (DT0SORT 2)
+S2e1 -> (DT0SORT (- 2))
+S2RC -> (_ as-array k!30)
+PS2_Eating_tok0 -> (DT0SORT 2)
+k!0 -> {
+  (DT0SORT 4) -> false
+  (DT0SORT 1) -> false
+  (DT0SORT 3) -> false
+  (DT0SORT (- 8583)) -> false
+  (DT0SORT 2) -> false
+  (DT0SORT 0) -> true
+  else -> false
+}
+k!32 -> {
+  (DT0SORT 1) -> true
+  (DT0SORT (- 2)) -> true
+  else -> false
+}
+k!21 -> {
+  false
+}
+k!10 -> {
+  (DT0SORT 1) -> false
+  (DT0SORT 3) -> false
+  (DT0SORT (- 8583)) -> false
+  (DT0SORT 2) -> false
+  (DT0SORT 4) -> true
+  else -> false
+}
+k!42 -> {
+  (DT0SORT 1) -> false
+  (DT0SORT 3) -> false
+  (DT0SORT (- 8583)) -> false
+  (DT0SORT 3509) -> false
+  (DT0SORT 2) -> true
+  (DT0SORT 4) -> false
+  else -> false
+}
+k!31 -> {
+  (DT0SORT (- 2)) -> true
+  else -> false
+}
+k!20 -> {
+  (DT0SORT 1) -> false
+  (DT0SORT 3) -> false
+  (DT0SORT (- 8583)) -> true
+  (DT0SORT 2) -> false
+  (DT0SORT 4) -> false
+  else -> false
+}
+k!9 -> {
+  (DT0SORT 0) -> true
+  (DT0SORT 1) -> true
+  (DT0SORT 3) -> true
+  (DT0SORT (- 8583)) -> false
+  (DT0SORT 2) -> true
+  (DT0SORT 4) -> false
+  else -> false
+}
+k!41 -> {
+  (DT0SORT 7579) -> true
+  (DT0SORT 3509) -> true
+  else -> false
+}
+k!30 -> {
+  false
+}
+k!19 -> {
+  (DT0SORT 0) -> true
+  (DT0SORT 1) -> true
+  (DT0SORT (- 1)) -> false
+  (DT0SORT 3) -> true
+  (DT0SORT 2) -> true
+  (DT0SORT (- 8583)) -> false
+  (DT0SORT 4) -> true
+  else -> false
+}
+k!8 -> {
+  (DT0SORT 1) -> false
+  (DT0SORT 3) -> false
+  (DT0SORT (- 8583)) -> false
+  (DT0SORT 2) -> false
+  (DT0SORT 4) -> false
+  else -> false
+}
+k!40 -> {
+  (DT0SORT 3509) -> true
+  else -> false
+}
+k!29 -> {
+  (DT0SORT 0) -> true
+  (DT0SORT 1) -> true
+  (DT0SORT 3) -> true
+  (DT0SORT (- 8583)) -> false
+  (DT0SORT 2) -> false
+  (DT0SORT 4) -> true
+  else -> false
+}
+k!18 -> {
+  (DT0SORT 3) -> false
+  (DT0SORT 10) -> false
+  else -> false
+}
+k!7 -> {
+  (DT0SORT 6338) -> false
+  (DT0SORT 7) -> false
+  else -> false
+}
+k!39 -> {
+  false
+}
+k!28 -> {
+  (DT0SORT 0) -> true
+  (DT0SORT 1) -> true
+  (DT0SORT 3) -> false
+  (DT0SORT (- 8583)) -> false
+  (DT0SORT 2) -> false
+  (DT0SORT 4) -> true
+  else -> false
+}
+k!17 -> {
+  (DT0SORT 3) -> false
+  else -> false
+}
+k!6 -> {
+  (DT0SORT 6338) -> false
+  else -> false
+}
+k!38 -> {
+  (DT0SORT 0) -> true
+  (DT0SORT 1) -> true
+  (DT0SORT 3) -> true
+  (DT0SORT (- 8583)) -> false
+  (DT0SORT 2) -> false
+  (DT0SORT 4) -> false
+  else -> false
+}
+k!27 -> {
+  (DT0SORT 1) -> false
+  (DT0SORT 3) -> false
+  (DT0SORT (- 8583)) -> false
+  (DT0SORT 2) -> true
+  (DT0SORT 4) -> false
+  else -> false
+}
+k!16 -> {
+  false
+}
+k!5 -> {
+  false
+}
+k!37 -> {
+  (DT0SORT 1) -> false
+  (DT0SORT 3) -> false
+  (DT0SORT (- 8583)) -> false
+  (DT0SORT 2) -> true
+  (DT0SORT 4) -> true
+  else -> false
+}
+k!26 -> {
+  (DT0SORT 4) -> true
+  (DT0SORT 1) -> true
+  (DT0SORT 3) -> false
+  (DT0SORT (- 8583)) -> false
+  (DT0SORT 2) -> true
+  (DT0SORT 0) -> true
+  else -> false
+}
+k!15 -> {
+  (DT0SORT 0) -> true
+  (DT0SORT 1) -> true
+  (DT0SORT 3) -> true
+  (DT0SORT (- 8583)) -> false
+  (DT0SORT 9) -> true
+  (DT0SORT 2) -> true
+  (DT0SORT 4) -> true
+  else -> false
+}
+k!4 -> {
+  (DT0SORT 0) -> true
+  (DT0SORT 1) -> true
+  (DT0SORT 3) -> true
+  (DT0SORT (- 8583)) -> false
+  (DT0SORT 2) -> true
+  (DT0SORT 4) -> true
+  else -> false
+}
+k!36 -> {
+  (DT0SORT 0) -> false
+  (DT0SORT 1) -> true
+  (DT0SORT 3) -> false
+  (DT0SORT (- 8583)) -> false
+  (DT0SORT 2) -> false
+  (DT0SORT 4) -> false
+  else -> false
+}
+k!25 -> {
+  (DT0SORT 0) -> true
+  (DT0SORT 1) -> true
+  (DT0SORT 3) -> true
+  (DT0SORT (- 8583)) -> false
+  (DT0SORT 2) -> true
+  (DT0SORT 4) -> true
+  else -> false
+}
+k!14 -> {
+  (DT0SORT 1) -> false
+  (DT0SORT 3) -> false
+  (DT0SORT (- 8583)) -> false
+  (DT0SORT 2) -> false
+  (DT0SORT 4) -> false
+  else -> false
+}
+k!3 -> {
+  (DT0SORT 0) -> true
+  (DT0SORT 1) -> true
+  (DT0SORT 3) -> true
+  (DT0SORT (- 8583)) -> false
+  (DT0SORT 2) -> true
+  (DT0SORT 4) -> false
+  else -> false
+}
+k!35 -> {
+  (DT0SORT 4) -> true
+  (DT0SORT 1) -> true
+  (DT0SORT 3) -> false
+  (DT0SORT (- 8583)) -> false
+  (DT0SORT 2) -> false
+  (DT0SORT 0) -> false
+  else -> false
+}
+k!24 -> {
+  (DT0SORT 1) -> false
+  (DT0SORT 3) -> false
+  (DT0SORT (- 8583)) -> false
+  (DT0SORT 2) -> false
+  (DT0SORT 4) -> false
+  else -> false
+}
+k!13 -> {
+  (DT0SORT 2282) -> true
+  (DT0SORT (- 8583)) -> true
+  else -> false
+}
+k!2 -> {
+  (DT0SORT 0) -> true
+  (DT0SORT 1) -> true
+  (DT0SORT 3) -> false
+  (DT0SORT (- 8583)) -> false
+  (DT0SORT 2) -> true
+  (DT0SORT 4) -> false
+  else -> false
+}
+k!34 -> {
+  (DT0SORT 4) -> true
+  (DT0SORT 1) -> true
+  (DT0SORT 3) -> true
+  (DT0SORT (- 8583)) -> true
+  (DT0SORT 2) -> true
+  (DT0SORT 0) -> true
+  else -> false
+}
+k!23 -> {
+  (DT0SORT 4) -> true
+  (DT0SORT 0) -> true
+  else -> false
+}
+k!12 -> {
+  (DT0SORT (- 8583)) -> true
+  else -> false
+}
+k!1 -> {
+  (DT0SORT 0) -> true
+  (DT0SORT 1) -> true
+  (DT0SORT 3) -> false
+  (DT0SORT (- 8583)) -> false
+  (DT0SORT 2) -> false
+  (DT0SORT 4) -> false
+  else -> false
+}
+k!33 -> {
+  (DT0SORT 1) -> false
+  (DT0SORT 3) -> false
+  (DT0SORT (- 2)) -> false
+  (DT0SORT (- 8583)) -> false
+  (DT0SORT 2) -> false
+  (DT0SORT 4) -> false
+  else -> false
+}
+k!22 -> {
+  (DT0SORT 4) -> true
+  else -> false
+}
+k!11 -> {
+  false
+}
+k!43 -> {
+  (DT0SORT 4) -> true
+  (DT0SORT 0) -> true
+  (DT0SORT 1) -> true
+  (DT0SORT 3) -> true
+  (DT0SORT (- 8583)) -> false
+  (DT0SORT 2) -> false
+  (DT0SORT 14) -> true
+  else -> false
+}
 
-Result:
-add rows:                186317
-added eqs:               7460001
-arith conflicts:         112
-array ax1:               238
-array ax2:               291982
-array def const:         3
-array ext ax:            1471
-array sel const:         2277
-assert diseq:            472181
-assert lower:            802701
-assert upper:            740942
-binary propagations:     8678124
-bound prop:              5264
-conflicts:               99631
-datatype accessor ax:    258
-datatype constructor ax: 258
-decisions:               3689257
-del clause:              500617
-dyn ack:                 40
-eq adapter:              1697
-fixed eqs:               251434
-minimized lits:          811604
-mk clause:               523220
-num checks:              1
-offset eqs:              302749
-pivots:                  13069
-propagations:            19821037
-restarts:                370
-max. heap size:     9.27012 Mbytes
-
-END OF Result

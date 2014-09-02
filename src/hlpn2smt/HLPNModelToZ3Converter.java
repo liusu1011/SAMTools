@@ -64,9 +64,7 @@ public class HLPNModelToZ3Converter {
 		pb = new PropertyBuilder(model, properties, placeNameIdMap, placeNameSortMap, stringConstantMap);
 		
 		//convert and save
-//		saveToFile(convert(depth));
 		completeChecking();
-//		refineOutputs("z3output.txt");
 	}
 	/**
 	 * if base step checking is SAT true, return trace;
@@ -82,16 +80,16 @@ public class HLPNModelToZ3Converter {
 	
 	public void baseStepChecking() {
 		saveToFile(convert(depth));
-		runZ3Scripts("base");
+//		runZ3Scripts("base");
 		
 	}
 	
-	public void inductionStepChecking() {
-//		HLPNModelToZ3Converter.depth++;
-		String inductionChecker = inductionConvert();
-		saveInductionCheckerToFile(inductionChecker);
-		runZ3Scripts("induction");
-	}
+//	public void inductionStepChecking() {
+////		HLPNModelToZ3Converter.depth++;
+//		String inductionChecker = inductionConvert();
+//		saveInductionCheckerToFile(inductionChecker);
+//		runZ3Scripts("induction");
+//	}
 	
 	public String convert(int depth){
 		StringBuilder z3str = new StringBuilder();
@@ -102,7 +100,7 @@ public class HLPNModelToZ3Converter {
 		z3str.append(buildStates());			
 		z3str.append(iniStates());
 		z3str.append(buildTransitions());
-		pb.setMondexProperties();
+//		pb.set_SharedMemory_5_p_sm_2();
 		z3str.append(pb.buildProperties());
 		z3str.append("\n}\n");
 		return z3str.toString();
@@ -181,22 +179,24 @@ public class HLPNModelToZ3Converter {
 		}catch (IOException e) {
             throw new RuntimeException(e);
         }
-//		Process p;
-//		try {
-//			long startTime = System.currentTimeMillis();
-//			System.out.println("Start Checking...");
-////			p = Runtime.getRuntime().exec("./MacRunZ3.sh "+model.pnmlName+"Checker.c");
+		Process p;
+		try {
+			long startTime = System.currentTimeMillis();
+			System.out.println("Start Checking...");
+			p = Runtime.getRuntime().exec("./MacRunZ3.sh "+model.pnmlName+"Checker.c");
 //			p = Runtime.getRuntime().exec("./LinuxRunZ3.sh "+model.pnmlName+"Checker.c");
-//			p.waitFor();
-//			System.out.println("Z3Checking Finish!!!");
-//			long endTime   = System.currentTimeMillis();
-//			long totalTime = endTime - startTime;
-//			System.out.println("time elapsed for checking is: "+totalTime/1000.0+" seconds.");
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
+//			p = Runtime.getRuntime().exec(".\\WinRunZ3.bat "+model.pnmlName+"Checker.c");
+			System.out.println("CheckING...");
+			p.waitFor();
+			System.out.println("Z3Checking Finish!!!");
+			long endTime   = System.currentTimeMillis();
+			long totalTime = endTime - startTime;
+			System.out.println("time elapsed for checking is: "+totalTime/1000.0+" seconds.");
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		 
 	}
 	
@@ -212,28 +212,6 @@ public class HLPNModelToZ3Converter {
             throw new RuntimeException(e);
         }
 
-	}
-	
-	public void runZ3Scripts(String type) {
-		Process p;
-		try {
-			long startTime = System.currentTimeMillis();
-			System.out.println("Start Checking...");
-//			p = Runtime.getRuntime().exec("./MacRunZ3.sh "+model.pnmlName+"Checker.c");
-			if(type.equals("induction"))
-				p = Runtime.getRuntime().exec("./LinuxRunZ3.sh "+model.pnmlName+"InductionChecker.c");
-			else
-				p = Runtime.getRuntime().exec("./MacRunZ3.sh "+model.pnmlName+"Checker.c");
-			p.waitFor();
-			System.out.println("Z3Checking Finish!!!");
-			long endTime   = System.currentTimeMillis();
-			long totalTime = endTime - startTime;
-			System.out.println("time elapsed for checking is: "+totalTime/1000.0+" seconds.");
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	public void refineOutputs(String outputFileName){

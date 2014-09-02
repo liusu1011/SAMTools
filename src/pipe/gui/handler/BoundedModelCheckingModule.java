@@ -30,7 +30,11 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
+import pipe.dataLayer.BasicType;
 import pipe.dataLayer.DataLayer;
+import pipe.dataLayer.DataType;
+import pipe.dataLayer.Place;
+import pipe.dataLayer.Token;
 import pipe.gui.CreateGui;
 import pipe.gui.widgets.ButtonBar;
 import pipe.gui.widgets.EscapableDialog;
@@ -50,21 +54,23 @@ public class BoundedModelCheckingModule extends AbstractAction {
 	private JLabel PreDefineSteps;
 	//property definition
 	private JLabel PropertySpec;
-	private JLabel PropertyName;
-	private JTextField PropertyNameText;
+	private JLabel PropertyPlace;
+	private JTextField PropertyPlaceText;
 	private JLabel PropertyToken;
 	private JTextField PropertyTokenText;
 	private JLabel PropertyRelationType;
 	private JComboBox relationTypeComboBox;
-	private String relationTypeString;
+	private String relationTypeString = "CONJUNCTION";
 	private JLabel PropertyOperator;
 	private JComboBox operatorComboBox;
-	private String operatorTypeString;
+	private String operatorTypeString = "EQ";
 	
 //	private JButton addPropertyButton;//TODO:
 	private JList propertyList;//TODO:
 	private DefaultListModel<String> propertyListStrings;
 	
+	ArrayList<Property> propertyBuilderList = new ArrayList<Property>();
+	DataLayer sourceDataLayer = CreateGui.getModel();
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -91,9 +97,9 @@ public class BoundedModelCheckingModule extends AbstractAction {
 		rightPanel = new JPanel();
 		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.PAGE_AXIS));	
 		// add property
-		rightPanel.add(PropertySpec = new JLabel("Property Spec: "));
-		rightPanel.add(PropertyName = new JLabel("Property Name: "));
-		rightPanel.add(this.PropertyNameText = new JTextField());
+		rightPanel.add(PropertySpec = new JLabel("---Property SPEC---\n"));
+		rightPanel.add(PropertyPlace = new JLabel("Property Place: "));
+		rightPanel.add(this.PropertyPlaceText = new JTextField());
 		rightPanel.add(PropertyToken = new JLabel("Property Token: "));
 		rightPanel.add(this.PropertyTokenText = new JTextField());
 		rightPanel.add(PropertyRelationType = new JLabel("Property RelationType: "));
@@ -124,12 +130,6 @@ public class BoundedModelCheckingModule extends AbstractAction {
 	      });
 	      rightPanel.add(operatorComboBox);
 	      
-	      rightPanel.add(new ButtonBar("Add Property", new ActionListener(){
-	    	  public void actionPerformed(ActionEvent e){
-	    		  //add the property name to JList
-	    	  }
-	      }, guiDialog.getRootPane()));
-	      
 	      this.propertyListStrings = new DefaultListModel<String>();//init as null, but need to init with previous defined property
 	      this.propertyList = new JList(propertyListStrings);
 	      
@@ -140,6 +140,17 @@ public class BoundedModelCheckingModule extends AbstractAction {
 	      rightPanel.add(new JLabel("Defined Properties"));
 	      rightPanel.add(scrollPropertyListPane);
 	      
+	      rightPanel.add(new ButtonBar("Add To Property", new ActionListener(){
+	    	  public void actionPerformed(ActionEvent e){
+	    		  //add the property name to JList
+	    		  propertyListStrings.addElement(PropertyPlaceText.getText());
+	    		  //add the property to propertyList
+	    		  buildPropertyFromGUI();
+	    	  }
+	      }, guiDialog.getRootPane()));
+	      
+	      
+	      
 	      //add  formula textbox
 	      rightPanel.add(PreDefineSteps = new JLabel("Pre Define Checking Steps:"));
 	      rightPanel.add(steptext = new JTextField(CreateGui.getModel().getPropertyFormula()));
@@ -149,7 +160,30 @@ public class BoundedModelCheckingModule extends AbstractAction {
 	              guiDialog.getRootPane()));
 	}
 	
-	
+	public void buildPropertyFromGUI(){
+		String placeName = this.PropertyPlaceText.getText();
+		Place p  = sourceDataLayer.getPlaceByName(placeName);
+		DataType dt = p.getDataType();
+		Token tok = new Token(dt);
+		String tokenText = this.PropertyTokenText.getText();
+		String tempTokenStr = tokenText.substring(1, tokenText.length()-1);
+		String[] tokenStrs = tempTokenStr.split(",");
+		for(int i=0;i<tokenStrs.length;i++){
+			if(dt.getTypebyIndex(i)==0){
+				tok.Tlist.add(new BasicType(0, Integer.parseInt(tokenStrs[i]),""));
+			}else{
+				tok.Tlist.add(new BasicType(1, 0, tokenStrs[i]));
+			}
+		}
+		
+		Property.RelationType reltype = Property.RelationType.CONJUNCTION;
+		if(!relationTypeString.equals("CONJUNCTION"))reltype = Property.RelationType.DISJUNCTION;
+		Property.Operator optype = Property.Operator.EQ;
+		if(!operatorTypeString.equals("EQ"))optype = Property.Operator.NEQ;
+		Property newProp = new Property(placeName, tok, reltype, optype);
+		this.propertyBuilderList.add(newProp);
+	}
+
 	public void boundedModelCheckingWindow() {
 		 // Build interface
 		guiDialog = new EscapableDialog(CreateGui.appGui, MODULE_NAME, true);
@@ -199,20 +233,34 @@ public class BoundedModelCheckingModule extends AbstractAction {
 	    	  BufferedWriter bufferedWriter = null;
 			  BufferedReader bufferedReader = null;
 			  String r = "";
-	    	  DataLayer sourceDataLayer = CreateGui.getModel();
+	    	  
 	    	  String steps = new String(steptext.getText());
 	  	    if(steps.equals("")){
 	  	    	steptext.setText("pre defined step must be specified before checking !");
 	  	    	return;
 	  	    }
-	  	    ArrayList<Property> propertyList = new ArrayList<Property>();
-	    	HLPNModelToZ3Converter convert = new HLPNModelToZ3Converter(sourceDataLayer, Integer.parseInt(steps), propertyList);
+	  	    results.setText("");
+	    	HLPNModelToZ3Converter convert = new HLPNModelToZ3Converter(sourceDataLayer, Integer.parseInt(steps), propertyBuilderList);
+	    	boolean z3CheckingResult = false; 
 	    	try {
-	    		bufferedReader = new BufferedReader(new FileReader("z3output.txt"));
-				   String t;
-				   while((t=bufferedReader.readLine())!=null){
+	    		String t;
+	    		bufferedReader = new BufferedReader(new FileReader("z3Result.txt"));
+	    		if((t=bufferedReader.readLine())!=null){
+	    			r += t +"\n";
+	    			if(t.equals("sat")){
+	    				z3CheckingResult = true;
+	    			}
+	    		}
+				while((t=bufferedReader.readLine())!=null){
 					   r += t +"\n";
-				   }
+				}
+				if(z3CheckingResult){
+					r += "\n*******************Error Model**********************\n";
+					bufferedReader = new BufferedReader(new FileReader("newOutput.txt"));
+					while((t=bufferedReader.readLine())!=null){
+					   r += t +"\n";
+				   }  
+				}
 				   results.setText(r);
 	    	}catch(IOException ioe){
 				   ioe.printStackTrace();
